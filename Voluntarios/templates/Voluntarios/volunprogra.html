@@ -1,0 +1,363 @@
+{% extends 'Voluntarios/base.html' %}
+{% load static %}
+
+{% block title %}
+Página Principal - Gestión de Programas
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center text-primary">Gestión de Programas</h2>
+
+    <!-- Formulario para crear un nuevo programa -->
+    <div class="card shadow-lg mb-5">
+        <div class="card-header bg-primary text-white">
+            <h3>Crear Nuevo Programa</h3>
+        </div>
+        <div class="card-body">
+            <form method="post" action="{% url 'crear_programa' %}" enctype="multipart/form-data"
+                id="crear-programa-form" onsubmit="return mostrarModalExito(event)">
+                {% csrf_token %}
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="nombre_programa" class="form-label">Nombre del Programa</label>
+                        <input type="text" class="form-control" id="nombre_programa" name="nombre_programa"
+                            placeholder="Ingrese el nombre del programa" value="Programa Predeterminado" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="estatus" class="form-label">Estatus</label>
+                        <select class="form-select" id="estatus" name="estatus" required>
+                            <option value="" disabled>Seleccione el estatus</option>
+                            <option value="Activo" selected>Activo</option>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Inactivo">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="3"
+                        placeholder="Describa el programa" required>Descripción predeterminada del programa.</textarea>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
+                        <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio"
+                            value="{{ today|date:'Y-m-d' }}" required>
+                        <div id="error_fecha_inicio" class="text-danger mt-1" style="display: none;"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fecha_fin" class="form-label">Fecha de Fin</label>
+                        <input type="date" class="form-control" id="fecha_fin" name="fecha_fin"
+                            value="{{ default_end_date }}" required>
+                        <div id="error_fecha_fin" class="text-danger mt-1" style="display: none;"></div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="imagen_programa" class="form-label">Imagen del Programa</label>
+                    <input type="file" class="form-control" id="imagen_programa" name="imagen_programa"
+                        accept="image/jpeg, image/png, image/gif" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success px-5 py-2" id="submit-btn">Crear Programa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabla para mostrar los programas existentes -->
+    <div class="card shadow-lg">
+        <div class="card-header bg-secondary text-white">
+            <h3>Programas Existentes</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Estatus</th>
+                        <th>Becarios Inscritos</th>
+                        <th>Foto</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for programa in programas %}
+                    <tr>
+                        <td>{{ programa.nombre_programa }}</td>
+                        <td>{{ programa.descripcion }}</td>
+                        <td>{{ programa.fecha_inicio }}</td>
+                        <td>{{ programa.fecha_fin }}</td>
+                        <td>{{ programa.estatus }}</td>
+                        <td>{{ programa.becarios_inscritos }}</td>
+                        <td>
+                            {% if programa.foto %}
+                            <img src="{{ programa.foto.url }}" alt="Foto de {{ programa.nombre_programa }}"
+                                style="width: 90px; height: 70px; object-fit: cover;">
+                            {% else %}
+                            <span>No Disponible</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <!-- Botón para editar -->
+                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#editarModal{{ programa.id }}">Editar</button>
+                            <!-- Botón para eliminar -->
+                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#eliminarModal{{ programa.id }}">Eliminar</button>
+                        </td>
+                    </tr>
+
+                    <!-- Modal de edición -->
+                    <div class="modal fade" id="editarModal{{ programa.id }}" tabindex="-1"
+                        aria-labelledby="editarModalLabel{{ programa.id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-warning text-white">
+                                    <h5 class="modal-title" id="editarModalLabel{{ programa.id }}">Editar Programa
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form method="post" action="{% url 'editar_programa' programa.id %}" enctype="multipart/form-data" id="form_editar_programa">
+                                    {% csrf_token %}
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="nombre_programa_{{ programa.id }}" class="form-label">Nombre</label>
+                                            <input type="text" class="form-control" id="nombre_programa_{{ programa.id }}" name="nombre_programa" value="{{ programa.nombre_programa }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="descripcion_{{ programa.id }}" class="form-label">Descripción</label>
+                                            <textarea class="form-control" id="descripcion_{{ programa.id }}" name="descripcion" rows="3" required>{{ programa.descripcion }}</textarea>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="fecha_inicio_{{ programa.id }}" class="form-label">Fecha Inicio</label>
+                                                <input type="date" class="form-control" id="fecha_inicio_{{ programa.id }}" name="fecha_inicio" value="{{ programa.fecha_inicio|date:'Y-m-d' }}" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="fecha_fin_{{ programa.id }}" class="form-label">Fecha Fin</label>
+                                                <input type="date" class="form-control" id="fecha_fin_{{ programa.id }}" name="fecha_fin" value="{{ programa.fecha_fin|date:'Y-m-d' }}" required>
+                                                <small id="error_fecha_fin_{{ programa.id }}" style="color: red; display: none;">La fecha de fin no puede ser anterior a la fecha de inicio.</small>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="estatus_{{ programa.id }}" class="form-label">Estatus</label>
+                                            <select class="form-select" id="estatus_{{ programa.id }}" name="estatus" required>
+                                                <option value="Activo" {% if programa.estatus == "Activo" %}selected{% endif %}>Activo</option>
+                                                <option value="Pendiente" {% if programa.estatus == "Pendiente" %}selected{% endif %}>Pendiente</option>
+                                                <option value="Inactivo" {% if programa.estatus == "Inactivo" %}selected{% endif %}>Inactivo</option>                                                         
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="foto_{{ programa.id }}" class="form-label">Foto</label>
+                                            <input type="file" class="form-control" id="foto_{{ programa.id }}" name="foto">
+                                            {% if programa.foto %}
+                                                <div class="mt-2">
+                                                    <img src="{{ programa.foto.url }}" alt="Foto del programa" style="max-width: 100px;">
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </form>
+                                
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        // Obtener los elementos de las fechas
+                                        const fechaInicioInput = document.getElementById("fecha_inicio_{{ programa.id }}");
+                                        const fechaFinInput = document.getElementById("fecha_fin_{{ programa.id }}");
+                                        const errorFechaFin = document.getElementById("error_fecha_fin_{{ programa.id }}");
+                                
+                                        // Obtener la fecha actual en formato YYYY-MM-DD
+                                        const fechaActual = new Date().toISOString().split("T")[0];
+                                
+                                        // Deshabilitar fechas anteriores a hoy en la fecha de inicio
+                                        fechaInicioInput.setAttribute("min", fechaActual);
+                                
+                                        // Función de validación para la fecha de fin
+                                        function validarFechas() {
+                                            const fechaInicio = fechaInicioInput.value;
+                                            const fechaFin = fechaFinInput.value;
+                                
+                                            // Validar si la fecha de inicio es anterior a la fecha actual
+                                            if (fechaInicio < fechaActual) {
+                                                return false; // No se envía el formulario si la fecha de inicio es inválida
+                                            }
+                                
+                                            // Validar si la fecha de fin es anterior a la fecha de inicio
+                                            if (fechaFin < fechaInicio) {
+                                                errorFechaFin.style.display = "block";  // Mostrar mensaje de error
+                                                return false; // No se envía el formulario si la fecha de fin es inválida
+                                            } else {
+                                                errorFechaFin.style.display = "none";  // Ocultar mensaje de error
+                                            }
+                                
+                                            return true;  // Si todo es correcto, se permite el envío del formulario
+                                        }
+                                
+                                        // Agregar la validación antes de enviar el formulario
+                                        const form = document.getElementById("form_editar_programa");
+                                        form.onsubmit = function(event) {
+                                            // Prevenir el envío si las fechas no son válidas
+                                            if (!validarFechas()) {
+                                                event.preventDefault(); // Impide el envío del formulario
+                                            }
+                                        };
+                                
+                                        // Validar cuando el usuario cambie las fechas
+                                        fechaInicioInput.addEventListener('change', validarFechas);
+                                        fechaFinInput.addEventListener('change', validarFechas);
+                                    });
+                                </script>                                
+                                
+                                
+                                                             
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal de éxito para eliminación -->
+                    <div class="modal fade" id="exitoEliminarModal" tabindex="-1" aria-labelledby="exitoEliminarModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-success text-white">
+                                    <h5 class="modal-title" id="exitoEliminarModalLabel">¡Programa Eliminado!</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>¡El programa ha sido eliminado exitosamente!</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal para confirmar la eliminación del programa -->
+                    <div class="modal fade" id="eliminarModal{{ programa.id }}" tabindex="-1"
+                        aria-labelledby="eliminarModalLabel{{ programa.id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-danger text-white">
+                                    <h5 class="modal-title" id="eliminarModalLabel{{ programa.id }}">Eliminar Programa</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>¿Está seguro de que desea eliminar el programa <strong>{{ programa.nombre_programa }}</strong>? Esta acción no se puede deshacer.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form method="post" action="{% url 'eliminar_programa' programa.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    </form>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para mostrar mensaje de éxito -->
+<div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalExitoLabel">¡Éxito!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Programa agregado con éxito</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const fechaInicioInput = document.getElementById('fecha_inicio');
+        const fechaFinInput = document.getElementById('fecha_fin');
+        const submitButton = document.getElementById('submit-btn');
+        const errorFechaInicio = document.getElementById('error_fecha_inicio');
+        const errorFechaFin = document.getElementById('error_fecha_fin');
+
+        const today = new Date().toISOString().split('T')[0];
+        fechaInicioInput.setAttribute('min', today);
+        fechaFinInput.setAttribute('min', today);
+
+        function validateFechaInicio() {
+            const fechaInicio = new Date(fechaInicioInput.value);
+
+            if (fechaInicio < new Date(today)) {
+                errorFechaInicio.textContent = 'La fecha de inicio no puede ser anterior a hoy.';
+                errorFechaInicio.style.display = 'block';
+                return false;
+            } else {
+                errorFechaInicio.textContent = '';
+                errorFechaInicio.style.display = 'none';
+                return true;
+            }
+        }
+
+        function validateFechaFin() {
+            const fechaInicio = new Date(fechaInicioInput.value);
+            const fechaFin = new Date(fechaFinInput.value);
+
+            if (fechaFin < fechaInicio) {
+                errorFechaFin.textContent = 'La fecha de fin no puede ser anterior a la fecha de inicio.';
+                errorFechaFin.style.display = 'block';
+                return false;
+            }
+
+            if (fechaFin < new Date(today)) {
+                errorFechaFin.textContent = 'La fecha de fin no puede ser anterior a hoy.';
+                errorFechaFin.style.display = 'block';
+                return false;
+            }
+
+            errorFechaFin.textContent = '';
+            errorFechaFin.style.display = 'none';
+            return true;
+        }
+
+        submitButton.addEventListener('click', function (event) {
+            const fechaInicioValida = validateFechaInicio();
+            const fechaFinValida = validateFechaFin();
+
+            if (!fechaInicioValida || !fechaFinValida) {
+                event.preventDefault();
+            }
+        });
+
+        fechaInicioInput.addEventListener('change', validateFechaInicio);
+        fechaFinInput.addEventListener('change', validateFechaFin);
+
+        window.mostrarModalExito = function (event) {
+            event.preventDefault();
+            const modalExito = new bootstrap.Modal(document.getElementById('exitoEliminarModal'));
+            modalExito.show();
+            modalExito._element.addEventListener('hidden.bs.modal', () => {
+                document.getElementById('crear-programa-form').submit();
+            });
+            return false;
+        }
+    });
+</script>
+
+{% endblock %}
