@@ -1,0 +1,174 @@
+{% extends 'Donantes/base.html' %}
+{% load static %}
+
+{% block title %}
+    Información del Donante
+{% endblock %}
+
+{% block content %}
+<div class="donor-data-section">
+    <h1 class="section-title">Información del Donante</h1>
+
+    <!-- Información Personal -->
+    <div class="info-card personal-info">
+        <h2><i class="fas fa-user"></i> Información Personal</h2>
+        <table class="styled-table">
+            <tr>
+                <th>Nombre Completo</th>
+                <td>{{ donante.nombre }} {{ donante.apellido_paterno }} {{ donante.apellido_materno }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ donante.email }}</td>
+            </tr>
+            <tr>
+                <th>RFC</th>
+                <td>{{ donante.rfc }}</td>
+            </tr>
+            <tr>
+                <th>Código Postal</th>
+                <td>{{ donante.codigo_postal }}</td>
+            </tr>
+            <tr>
+                <th>Tipo de Persona</th>
+                <td>{{ donante.persona_tipo }}</td>
+            </tr>
+            <tr>
+                <th>Régimen Fiscal</th>
+                <td>{{ donante.regimen_fiscal }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Información de Donaciones -->
+    <div class="info-card donation-info">
+        <h2><i class="fas fa-donate"></i> Información de Donaciones</h2>
+        <table class="styled-table">
+            <tr>
+                <th>Monto Total Donado</th>
+                <td>${{ donante.monto_donado }}</td>
+            </tr>
+            <tr>
+                <th>Última Donación</th>
+                <td>{{ donante.fecha_ultima_donacion|date:"d M Y" }}</td>
+            </tr>
+            <tr>
+                <th>Autorización de Datos</th>
+                <td>{{ donante.autorizacion_datos|yesno:"Sí,No" }}</td>
+            </tr>
+            <tr>
+                <th>Aceptación de Privacidad</th>
+                <td>{{ donante.aceptacion_privacidad|yesno:"Sí,No" }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Estilos -->
+<style>
+    /* Sección principal */
+    .donor-data-section {
+        max-width: 1000px;
+        margin: 20px auto;
+        padding: 20px;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 2.2rem;
+        color: #1d3557;
+        margin-bottom: 20px;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    /* Tarjetas de información */
+    .info-card {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .info-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .info-card h2 {
+        font-size: 1.6rem;
+        color: #1d3557;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+        border-left: 5px solid #457b9d;
+        padding-left: 10px;
+    }
+
+    /* Tablas */
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .styled-table th {
+        background-color: #457b9d;
+        color: white;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .styled-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    .styled-table tr:hover {
+        background-color: #d9e2ec;
+    }
+
+    .styled-table td {
+        color: #555555;
+        font-size: 0.95rem;
+    }
+
+    /* Colores según sección */
+    .personal-info h2 {
+        border-left-color: #457b9d;
+    }
+
+    .donation-info h2 {
+        border-left-color: #4caf50;
+    }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 1.8rem;
+        }
+
+        .info-card h2 {
+            font-size: 1.4rem;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            font-size: 0.85rem;
+        }
+    }
+</style>
+
+<!-- Iconos -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+{% endblock %}

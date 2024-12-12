@@ -1,0 +1,149 @@
+{% extends 'Donantes/base.html' %}
+{% load static %}
+{% block title %}
+    Reporte de Donaciones
+{% endblock %}
+
+{% block content %}
+<div class="report-section">
+    <h1>Reporte de Donaciones de {{ donante.nombre }}</h1>
+    
+    <div class="donation-table">
+        <h2>Lista de Donaciones:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Monto</th>
+                    <th>Fecha de Donación</th>
+                    <th>Método de Pago</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for donacion in donaciones %}
+                    <tr>
+                        <td>${{ donacion.monto }}</td>
+                        <td>{{ donacion.fecha_donacion|date:"d M Y" }}</td>
+                        <td>{{ donacion.metodo_pago }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">Aún no has realizado donaciones.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="download-section">
+        <h3>Descargar Reporte</h3>
+        <p>Haz clic en el siguiente botón para descargar el reporte en formato PDF con todas tus donaciones.</p>
+        <a href="{% url 'reporte_pdf' donante.id %}" class="btn-download">Descargar PDF</a>
+    </div>
+</div>
+
+<style>
+    .report-section {
+        background-color: #f9f9f9;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        max-width: 1000px;
+        margin: 40px auto;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .report-section h1 {
+        color: #2d5d73;
+        font-size: 2.5em;
+        margin-bottom: 20px;
+    }
+
+    .donation-table {
+        margin-top: 30px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .donation-table h2 {
+        color: #2d5d73;
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f1f1f1;
+        color: #333;
+    }
+
+    td {
+        font-size: 1.1em;
+        color: #666;
+    }
+
+    .download-section {
+        margin-top: 40px;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .download-section h3 {
+        color: #2d5d73;
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .btn-download {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #2d5d73;
+        color: #fff;
+        font-size: 1.2em;
+        text-decoration: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-download:hover {
+        background-color: #1b3a4b;
+    }
+
+    @media (max-width: 768px) {
+        .report-section {
+            padding: 25px;
+        }
+
+        .report-section h1 {
+            font-size: 2em;
+        }
+
+        .donation-table h2 {
+            font-size: 1.5em;
+        }
+
+        table {
+            font-size: 1em;
+        }
+
+        .btn-download {
+            font-size: 1.1em;
+        }
+    }
+</style>
+{% endblock %}
