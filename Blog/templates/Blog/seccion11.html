@@ -1,0 +1,82 @@
+{% extends 'Blog/blog.html' %}
+{% load static %}
+{% block title %}
+    Sección 11
+{% endblock %}
+
+{% block content %}
+<!-- Contenedor principal con cuadro de fondo más ancho -->
+<div class="article-container" style="max-width: 1200px; margin: 50px auto; padding: 40px; background: #ffffff; border-radius: 25px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); font-family: 'Arial', sans-serif;">
+
+    <!--Hero-->
+    <div class="hero-section" style="position: relative; height: 400px; background-color: #333; border-radius: 20px; overflow: hidden;">
+        <!-- Imagen de fondo -->
+        <img src="{% static 'images/ss5.jpg' %}" alt="Imagen Educativa" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(50%); border-radius: 20px;">
+    
+    <!-- Contenido principal con texto -->
+        <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; text-align: center; font-size: 36px; font-weight: bold;">
+            <h1>Cómo Las Becas Pueden Ayudar en Casos de Emergencia</h1>
+            <p style="font-size: 20px; font-weight: normal;">El apoyo educativo en tiempos de crisis</p>
+        </div>
+    </div>
+    
+    <!-- Contenido principal con texto -->
+    <div class="article-text" style="text-align: justify; line-height: 1.8; font-size: 20px; color: #333333; margin-top: 30px;">
+        <h2 style="font-size: 32px; font-weight: bold; color: #2967b9; text-transform: uppercase; margin-bottom: 25px;">Becas de Emergencia para Estudiantes Afectados</h2>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Muchos programas de becas ofrecen ayudas especiales o de emergencia para estudiantes que se ven afectados por situaciones imprevistas, como desastres naturales o problemas de salud graves. Estas becas pueden cubrir los gastos de matrícula, materiales escolares y otros costos asociados con la educación. Al proporcionar esta ayuda, las becas permiten que los estudiantes continúen sus estudios sin la preocupación de los costos, incluso en medio de una crisis.
+        </p>
+       
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Además de la ayuda financiera, muchas becas incluyen programas de apoyo psicológico y académico para estudiantes que han sufrido un trauma o una interrupción en sus estudios. Estos programas pueden incluir tutorías, terapia de apoyo y adaptaciones académicas para ayudar a los estudiantes a superar el impacto de la emergencia y volver a la normalidad.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Las emergencias a menudo requieren un enfoque flexible, especialmente cuando los estudiantes no pueden cumplir con los plazos establecidos debido a circunstancias inesperadas. Muchas instituciones educativas y organizaciones que otorgan becas permiten plazos de aplicación extendidos o modificaciones en los requisitos para estudiantes que enfrentan emergencias. Esta flexibilidad permite que los estudiantes afectados tengan una oportunidad justa para acceder a las ayudas disponibles.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Las becas de emergencia también pueden incluir el apoyo de organizaciones comunitarias que ofrecen asistencia directa a los estudiantes en momentos de crisis. Las comunidades pueden organizar eventos de recaudación de fondos, colectas de alimentos y otros recursos que ayudan a los estudiantes a superar las dificultades derivadas de la emergencia.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Las becas de emergencia son una herramienta crucial para garantizar que los estudiantes no pierdan su acceso a la educación durante tiempos de crisis. Además de la ayuda financiera, los programas de apoyo psicológico, académico y la flexibilidad en los plazos pueden marcar la diferencia en la vida de los estudiantes afectados por emergencias. Estas becas no solo son una ayuda económica, sino también una forma de asegurar que los estudiantes tengan un camino de regreso a su educación.
+        </p>
+    </div>              
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #cce7ff, #f6f9fc);
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .article-container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 30px auto;
+        max-width: 80%;
+    }
+
+    .hero-section {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .hero-section h2 {
+        color: #004080;
+        font-weight: bold;
+        text-shadow: 1px 1px 5px rgba(0, 64, 128, 0.3);
+    }
+
+    .overlay {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 15px;
+    }
+</style>
+
+
+{% endblock %}

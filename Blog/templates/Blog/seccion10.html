@@ -1,0 +1,82 @@
+{% extends 'Blog/blog.html' %}
+{% load static %}
+{% block title %}
+    Sección 10
+{% endblock %}
+
+{% block content %}
+<!-- Contenedor principal con cuadro de fondo más ancho -->
+<div class="article-container" style="max-width: 1200px; margin: 50px auto; padding: 40px; background: #ffffff; border-radius: 25px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); font-family: 'Arial', sans-serif;">
+
+    <!--Hero-->
+    <div class="hero-section" style="position: relative; height: 400px; background-color: #333; border-radius: 20px; overflow: hidden;">
+        <!-- Imagen de fondo -->
+        <img src="{% static 'images/ss2.jpg' %}" alt="Imagen Educativa" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(50%); border-radius: 20px;">
+    
+    <!-- Contenido principal con texto -->
+        <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; text-align: center; font-size: 36px; font-weight: bold;">
+            <h1>Cómo Prepararse para Emergencias en el Ámbito Educativo</h1>
+            <p style="font-size: 20px; font-weight: normal;">Guía para estar preparado ante situaciones imprevistas en el entorno escolar</p>
+        </div>
+    </div>
+    
+    <!-- Contenido principal con texto -->
+    <div class="article-text" style="text-align: justify; line-height: 1.8; font-size: 20px; color: #333333; margin-top: 30px;">
+        <h2 style="font-size: 32px; font-weight: bold; color: #2967b9; text-transform: uppercase; margin-bottom: 25px;">Desarrollar un Plan de Emergencia Institucional</h2>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Las instituciones educativas deben contar con un plan de emergencia que detalle las acciones a seguir en caso de situaciones críticas. Este plan debe incluir rutas de evacuación, puntos de encuentro, comunicación con las autoridades locales y protocolos para la atención médica de emergencia. Los estudiantes deben conocer estos procedimientos para poder actuar de manera rápida y organizada en caso de emergencia.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Una emergencia puede tener un impacto psicológico significativo en los estudiantes. Las instituciones educativas deben ofrecer apoyo emocional y psicológico para ayudar a los estudiantes a lidiar con el estrés, el miedo y la ansiedad. Talleres de resiliencia, consejería y grupos de apoyo pueden ser recursos útiles para fortalecer la capacidad de los estudiantes para enfrentar situaciones adversas.
+        </p>
+        
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Las emergencias afectan no solo a la institución educativa, sino también a la comunidad en general. Es vital que los padres, familiares y miembros de la comunidad estén involucrados en la preparación ante emergencias. Esto puede incluir desde la formación en primeros auxilios hasta la colaboración en la planificación de recursos y medidas de seguridad. Además, las comunidades pueden ser una fuente importante de ayuda en momentos de crisis.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Las escuelas deben proporcionar a los estudiantes información sobre cómo manejar emergencias, ya sea a través de materiales educativos, simulacros o charlas. Enseñar a los estudiantes a mantener la calma y a tomar decisiones informadas puede salvar vidas durante una emergencia.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            La preparación ante emergencias es una responsabilidad compartida entre las instituciones educativas, los estudiantes y la comunidad en general. Desarrollar planes de emergencia claros, proporcionar apoyo emocional y educar a los estudiantes sobre cómo reaccionar adecuadamente puede ayudar a minimizar el impacto de las emergencias y garantizar la seguridad de todos los involucrados.
+        </p>
+    </div>                
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #cce7ff, #f6f9fc);
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .article-container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 30px auto;
+        max-width: 80%;
+    }
+
+    .hero-section {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .hero-section h2 {
+        color: #004080;
+        font-weight: bold;
+        text-shadow: 1px 1px 5px rgba(0, 64, 128, 0.3);
+    }
+
+    .overlay {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 15px;
+    }
+</style>
+
+
+{% endblock %}

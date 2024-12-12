@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Aviso de Privacidad</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #ffffff;
+            margin: 0;
+            padding: 20px;
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .faq-section {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+        }
+        .faq {
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .faq:last-child {
+            border-bottom: none;
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.7);
+            color: blue;
+        }
+        .faq-question h2 {
+            font-size: 18px;
+            margin: 0;
+            font-weight: bold;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+            padding: 0 10px;
+        }
+        .faq-answer.active {
+            max-height: 200px;
+            opacity: 1;
+            padding: 10px;
+        }
+        .faq-answer p {
+            margin: 0;
+            color: #34495e;
+        }
+
+        /* Media Queries para Responsividad */
+        @media (max-width: 768px) {
+            .faq-question h2 {
+                font-size: 16px; /* Reducir tamaño de fuente en pantallas más pequeñas */
+            }
+            .container {
+                padding: 10px; /* Reducir padding en pantallas más pequeñas */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .faq-question {
+                flex-direction: column; /* Cambiar a columna en pantallas muy pequeñas */
+                align-items: flex-start; /* Alinear a la izquierda */
+            }
+            .faq-question h2 {
+                font-size: 14px; /* Reducir aún más el tamaño de fuente */
+            }
+            .faq-answer {
+                padding: 0 5px; /* Reducir padding en respuestas */
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Aviso de Privacidad</h1>
+    
+    <div class="faq-section">
+        <div class="faq">
+            <div class="faq-question" onclick="toggleAnswer(1)">
+                <h2>¿Para qué fines utilizaremos sus datos personales?</h2>
+            </div>
+            <div class="faq-answer" id="answer1">
+                <p>Los datos personales que recabamos de usted, los utilizaremos para las siguientes
+                    finalidades que son necesarias para el servicio que solicita como respuesta a mensajes del
+                    formulario de contacto y/o prestación de cualquier servicio solicitado</p>
+            </div>
+        </div>
+
+        <div class="faq">
+            <div class="faq-question" onclick="toggleAnswer(2)">
+                <h2>¿Qué datos personales utilizaremos para estos fines?</h2>
+            </div>
+            <div class="faq-answer" id="answer2">
+                <p> Para cumplir con las finalidades descritas en este aviso de privacidad, recopilaremos los siguientes datos personales: datos de identificación y contacto, datos sobre características físicas, datos biométricos, datos laborales, datos académicos, datos patrimoniales y/o financieros, datos sobre pasatiempos. Además de los datos mencionados, utilizaremos los siguientes datos personales considerados sensibles, que requieren una protección especial</p>
+            </div>
+        </div>
+
+        <div class="faq">
+            <div class="faq-question" onclick="toggleAnswer(3)">
+                <h2>¿Con quién compartimos su información personal y para qué fines?</h2>
+            </div>
+            <div class="faq-answer" id="answer3">
+                <p>Le informamos que sus datos personales son compartidos fuera del país con las siguientes personas, empresas, organizaciones o autoridades distintas a nosotros para los siguientes fines:</p>
+                <ul>
+                    <li>Instituciones educativas y organizaciones de becas para evaluar su elegibilidad y administrar su solicitud de beca.</li>
+                    <li>Servicios de procesamiento de pagos para gestionar los pagos de las becas y otros beneficios financieros.</li>
+                    <li>Proveedores de servicios en la nube para almacenar y proteger su información de manera segura.</li>
+                    <li>Autoridades gubernamentales y reguladoras para cumplir con las obligaciones legales y regulatorias aplicables.</li>
+                    <li>Consultores y asesores externos para obtener asesoramiento especializado y garantizar el mejor servicio posible.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq">
+            <div class="faq-question" onclick="toggleAnswer(4)">
+                <h2>¿Cómo puede acceder, rectificar o cancelar sus datos personales, u oponerse a su uso o ejercer la revocación de consentimiento?</h2>
+            </div>
+            <div class="faq-answer" id="answer4">
+                <p>Usted tiene derecho a conocer qué datos personales tenemos de usted, para qué los utilizamos y las condiciones del uso que les damos (acceso). Así mismo, es su derecho solicitar la corrección de su información personal (rectificación), su eliminación (cancelación) o su oposición al uso (oposición).</p>
+            </div>
+        </div>
+
+        <div class="faq">
+            <div class="faq-question" onclick="toggleAnswer(5)">
+                <h2>El uso de tecnologías de rastreo en nuestro portal de internet</h2>
+            </div>
+            <div class="faq-answer" id="answer5">
+                <p>En nuestra página de internet utilizamos cookies, web beacons u otras tecnologías que monitorean su comportamiento como usuario para mejorar su experiencia al navegar. Los datos que obtenemos de estas tecnologías incluyen: Identificadores, nombre de usuario, contraseñas, idioma preferido, región, navegador y sistema operativo.</p>
+            </div>
+        </div>
+
+        <div class="faq">
+            <div class="faq-question" onclick="toggleAnswer(6)">
+                <h2>¿Cómo puede conocer los cambios en este aviso de privacidad?</h2>
+            </div>
+            <div class="faq-answer" id="answer6">
+                <p>Este aviso de privacidad puede sufrir modificaciones, cambios o actualizaciones derivadas de nuevos requerimientos legales, nuestras necesidades de productos o servicios, o por otras causas. Siempre podrá consultar las actualizaciones en nuestro sitio web.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleAnswer(id) {
+        const answer = document.getElementById(`answer${id}`);
+        const allAnswers = document.querySelectorAll('.faq-answer');
+
+        // Cerrar otras respuestas abiertas
+        allAnswers.forEach((ans) => {
+            if (ans !== answer) {
+                ans.classList.remove('active');
+            }
+        });
+
+        // Alternar la clase activa
+        answer.classList.toggle('active');
+    }
+</script>
+
+</body>
+</html>

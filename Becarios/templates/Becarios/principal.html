@@ -1,0 +1,359 @@
+{% extends 'Becarios/base.html' %}
+{% load static %}
+
+{% block title %}
+    Página Principal
+{% endblock %}
+
+{% block content %}
+<style>
+  .content {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .welcome {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+
+  .welcome img {
+    border-radius: 50%;
+    border: 2px solid #007bff;
+    width: 100px;
+    height: 100px;
+  }
+
+  .welcome div h2 {
+    font-size: 1.8rem;
+    margin: 0;
+    color: #343a40;
+  }
+
+  .welcome div p {
+    margin: 5px 0 0;
+    color: #6c757d;
+  }
+
+  .notification {
+    display: flex;
+    align-items: center;
+    background-color: #e9f7f2;
+    color: #28a745;
+    border-left: 5px solid #28a745;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+  }
+
+  .notification i {
+    margin-right: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .form-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-container h2 {
+    font-size: 1.5rem;
+    color: #343a40;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  .form-container .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .form-container label {
+    display: block;
+    margin-bottom: 5px;
+    color: #495057;
+    font-weight: bold;
+  }
+
+  .form-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+  }
+
+  .form-container button {
+    grid-column: span 2;
+    padding: 10px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  .form-container button:hover {
+    background-color: #0056b3;
+  }
+
+
+
+/* Fondo transparente del modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Modal principal */
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+/* Cuando el modal está activo */
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+}
+
+/* Encabezado del modal */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #4CAF50;
+    font-size: 24px;
+}
+
+.modal-close {
+    cursor: pointer;
+    font-size: 20px;
+    color: #999;
+    transition: color 0.2s ease;
+}
+
+.modal-close:hover {
+    color: #000;
+}
+
+/* Cuerpo del modal */
+.modal-body {
+    margin-top: 20px;
+}
+
+.modal-body p {
+    font-size: 18px;
+    color: #555;
+}
+
+/* Animación para el ícono */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.modal-body .bi {
+    animation: bounce 1s ease infinite;
+}
+
+.archivo-nombre {
+      display: block;
+      margin-top: 5px;
+      font-size: 0.9rem;
+      color: #6c757d;
+  }
+
+</style>
+
+<div class="content">
+  <!-- Sección de bienvenida -->
+  <div class="welcome">
+    <img src="{{ usuario.foto.url }}" alt="Foto de perfil de {{ usuario.nombre }}">
+    <div>
+      <h2>¡Hola, {{ usuario.nombre }} {{ usuario.apellido_paterno }}!</h2>
+      <p>3er semestre de universidad</p>
+    </div>
+  </div>
+
+  <!-- Notificación -->
+  <div class="notification">
+    <i class="fas fa-bell"></i>
+    ¡Hope For Learning te da la Bienvenida!
+  </div>
+
+  <!-- Título principal -->
+  <h1>Sube tus documentos del semestre</h1>
+
+  <!-- Formulario -->
+  <div class="form-container">
+    <form method="POST" enctype="multipart/form-data" id="form-documentos" onsubmit="enviarFormulario(event)">
+      {% csrf_token %}
+      <div class="form-grid">
+          <div>
+              <label for="constancia">Subir constancia:</label>
+              <div>
+                  <input type="file" name="constancia" id="constancia" required onchange="mostrarNombreArchivo(this, 'constancia-nombre')">
+                  <span id="constancia-nombre" class="archivo-nombre">No se ha seleccionado ningún archivo.</span>
+              </div>
+          </div>
+          <div>
+              <label for="boleta">Subir boleta:</label>
+              <div>
+                  <input type="file" name="boleta" id="boleta" required onchange="mostrarNombreArchivo(this, 'boleta-nombre')">
+                  <span id="boleta-nombre" class="archivo-nombre">No se ha seleccionado ningún archivo.</span>
+              </div>
+          </div>
+          <div>
+              <label for="promedio_general">Promedio general:</label>
+              <input type="number" step="0.01" name="promedio_general" id="promedio_general" required>
+          </div>
+          <div>
+              <label for="promedio_semestre">Promedio semestre:</label>
+              <input type="number" step="0.01" name="promedio_semestre" id="promedio_semestre" required>
+          </div>
+          <button type="submit">Guardar documentos</button>
+      </div>
+  </form>
+  
+  </div>
+</div>
+
+<div id="modal-mensaje" class="modal">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h2 id="modal-titulo">¡Éxito!</h2>
+          <span class="modal-close" onclick="cerrarModal()">&times;</span>
+      </div>
+      <div class="modal-body">
+          <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem; animation: bounce 1s infinite;"></i>
+          <p id="modal-mensaje-texto">Documentos guardados exitosamente.</p>
+      </div>
+  </div>
+</div>
+
+<script>
+  function mostrarNombreArchivo(input, spanId) {
+      const archivo = input.files[0]; // Obtener el archivo seleccionado
+      const spanElemento = document.getElementById(spanId);
+
+      if (archivo) {
+          spanElemento.textContent = archivo.name; // Mostrar el nombre del archivo
+      } else {
+          spanElemento.textContent = "No se ha seleccionado ningún archivo."; // Mensaje predeterminado
+      }
+  }
+</script>
+
+
+<script>
+  function enviarFormulario(event) {
+      event.preventDefault();
+
+      const form = document.getElementById('form-documentos');
+      const formData = new FormData(form);
+
+      fetch("{% url 'base' %}", {
+          method: "POST",
+          headers: {
+              "X-Requested-With": "XMLHttpRequest",
+          },
+          body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              mostrarModal("¡Éxito!", data.message);
+              limpiarCamposFormulario(); // Limpia los campos después del éxito
+          } else {
+              mostrarModal("¡Error!", data.message);
+          }
+      })
+      .catch(error => {
+          console.error("Error en la solicitud:", error);
+          mostrarModal("¡Error!", "Ocurrió un error inesperado.");
+      });
+  }
+
+  function limpiarCamposFormulario() {
+      const form = document.getElementById('form-documentos');
+      form.reset(); // Limpia todos los campos del formulario
+  }
+
+  function mostrarModal(titulo, mensaje) {
+      document.getElementById("modal-titulo").innerText = titulo;
+      document.getElementById("modal-mensaje-texto").innerText = mensaje;
+
+      const modal = document.getElementById("modal-mensaje");
+      modal.classList.add("show");
+
+      setTimeout(cerrarModal, 3000); // Cierra automáticamente después de 3 segundos
+  }
+
+  function cerrarModal() {
+      const modal = document.getElementById("modal-mensaje");
+      modal.classList.remove("show");
+  }
+</script>
+
+
+
+
+
+{% endblock %}

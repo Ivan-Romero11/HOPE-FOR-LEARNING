@@ -1,0 +1,551 @@
+<!-- layout.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}HOPE FOR LEARNING{% endblock %}</title>
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilo del header */
+        .top-bar {
+        background-color: #0A2A4A;
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .top-bar .left {
+        display: flex;
+        align-items: center;
+    }
+
+    .top-bar .left h1 {
+        margin: 0;
+        font-size: 24px;
+        color: #4A90E2;
+    }
+
+    .top-bar .left h1 span {
+        color: white;
+    }
+
+    .top-bar .right a {
+        color: #FFC107;
+        margin-left: 20px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: background-color 0.3s ease, color 0.3s ease; /* Animación */
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .top-bar .right a:hover {
+        background-color: #FFC107;
+        color: #0A2A4A;
+    }
+
+    .bottom-bar {
+        background-color: #004481;
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .bottom-bar .left a {
+        color: #B3D4FC;
+        margin-right: 20px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: background-color 0.3s ease, color 0.3s ease; /* Animación */
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .bottom-bar .left a:hover {
+        background-color: #B3D4FC;
+        color: #004481;
+    }
+
+    .bottom-bar .center {
+        color: white;
+        font-size: 14px;
+    }
+
+    .bottom-bar .right {
+        display: flex;
+        align-items: center;
+    }
+
+    .bottom-bar .right .donate-button {
+        background-color: #00BFA5;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-right: 20px;
+        transition: background-color 0.3s ease, transform 0.3s ease; /* Animación */
+    }
+
+    .bottom-bar .right .donate-button:hover {
+        background-color: #008C72;
+        transform: scale(1.1); /* Efecto de aumentar ligeramente el botón */
+    }
+
+    .bottom-bar .right .search-icon {
+        color: #B3D4FC;
+        font-size: 18px;
+        transition: color 0.3s ease; /* Animación */
+    }
+
+    .bottom-bar .right .search-icon:hover {
+        color: white;
+    }
+
+        /* Carrusel */
+        .d-item {
+            height: 500px;
+            position: relative;
+        }
+
+        .d-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.5);
+        }
+
+        .carousel-caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            z-index: 10;
+            font-size: 2rem;
+            text-transform: uppercase;
+        }
+
+        .carousel-caption p {
+            position: absolute;
+            top: 80%; /* Centra el texto verticalmente */
+            left: 50%; /* Centra el texto horizontalmente */
+            transform: translate(-50%, -50%); /* Ajusta el posicionamiento para que quede exactamente en el centro */
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Añadimos una sombra para que el texto resalte más */
+            z-index: 10; /* Asegura que el texto esté por encima de la imagen */
+            font-size: 2rem; /* Aumentamos el tamaño del texto para que sea más visible */
+            text-transform: uppercase; /* Mantén el texto en mayúsculas */
+        }
+
+        .carousel-fixed-caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            z-index: 10;
+        }
+
+        .carousel-fixed-caption h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .carousel-fixed-caption p {
+            font-size: 1.5rem;
+        }
+
+        /* Sección de enlaces */
+        .section-links {
+            background-color: #004481;
+            padding: 15px 0;
+            text-align: center;
+            height: 70px;
+        }
+
+        .section-links a {
+            color: #ffffff;
+            margin: 0 20px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .section-links a:hover {
+            color: #316afc;
+        }
+
+        /* Sección de tarjetas */
+        .cards-section {
+            background-color: #222;
+            color: #fff;
+            padding: 60px 0;
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border: none;
+            margin-bottom: 20px;
+            overflow: hidden;
+            width: 80%;
+            margin-left: 50px;
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            border-radius: 0px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            background-color: #004481;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .card1{
+            background-color: #ffffff;
+            border: none;
+            margin-bottom: 20px;
+            overflow: hidden;
+            width: 80%;
+            margin-left: 300px;
+        }
+        .card1 img {
+            width: 100%;
+            height: 200px;
+            border-radius: 0px;
+            object-fit: cover;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Evita el desbordamiento horizontal */
+            width: 100%;
+        }
+
+        main {
+            flex: 1;
+        }
+/*==================== 
+  Footer 
+====================== */
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+a {
+    color: #fff;
+    text-decoration: none;
+}
+.pg-footer {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Estilos generales del pie de página */
+.footer {
+    background-color: #0A2A4A;
+    color: #fff;
+}
+.footer-wave-svg {
+    display: block;
+    height: 30px;
+    width: 100%;
+    position: relative;
+    top: -1px;
+}
+.footer-wave-path {
+    fill: #fffff2;
+}
+
+/* Contenido principal */
+.footer-content {
+    margin: 0 auto;
+    max-width: 1230px;
+    padding: 20px 15px; /* Reducimos padding para disminuir altura */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.footer-content-column {
+    padding: 10px 15px;
+    flex: 1 1 200px; /* Ajuste dinámico del ancho */
+    min-width: 200px;
+}
+.footer-logo-link {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.footer-menu {
+    margin-top: 15px;
+}
+.footer-menu-name {
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+}
+.footer-menu-list {
+    list-style: none;
+    padding: 0;
+}
+.footer-menu-list li {
+    margin-top: 5px;
+}
+.footer-menu-list li a {
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Llamado a la acción */
+.footer-call-to-action {
+    margin-top: 20px;
+    text-align: center;
+    flex: 1 1 100%; /* Ocupar todo el ancho en vista móvil */
+}
+.footer-call-to-action-title {
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0;
+}
+.footer-call-to-action-description {
+    margin: 10px 0;
+}
+.footer-call-to-action-button {
+    background-color: #027b9a;
+    color: #fff;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 25px;
+    border-radius: 20px;
+    transition: background-color 0.2s;
+    cursor: pointer;
+}
+.footer-call-to-action-button:hover {
+    background-color: #fffff2;
+    color: #00bef0;
+}
+
+/* Redes sociales */
+.footer-social-links {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+.footer-social-link {
+    display: block;
+    width: 28px;
+    height: 28px;
+    position: relative;
+}
+.footer-social-icon-path {
+    fill: #fffff2;
+    transition: fill 0.2s;
+}
+.footer-social-link:hover .footer-social-icon-path {
+    fill: #00bef0;
+}
+
+/* Copyright */
+.footer-copyright {
+    background-color: #004481;
+    color: #fff;
+    padding: 10px; /* Reducimos padding */
+    text-align: center;
+    font-size: 12px;
+}
+.footer-copyright-link {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Media Queries */
+@media (max-width: 599px) {
+    .footer-content {
+        flex-direction: column;
+        padding-bottom: 50px; /* Ajustamos altura */
+    }
+    .footer-content-column {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .footer-call-to-action {
+        text-align: center;
+    }
+    .footer-menu-list li {
+        text-align: center;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 800px) {
+    .footer-content {
+        padding-bottom: 50px; /* Más compacto */
+    }
+}
+
+@media (min-width: 801px) {
+    .footer-content-column {
+        flex: 1 1 25%; /* Dividimos columnas en 4 partes */
+    }
+}
+
+@media (min-width: 1025px) {
+    .footer-wave-svg {
+        height: 50px;
+    }
+}
+
+@media (min-width: 1281px) {
+    .footer-content {
+        padding-bottom: 30px; /* Máxima compresión en pantallas grandes */
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="top-bar">
+            <div class="left">
+                <h1>Hope for <span>Learning</span></h1>
+            </div>
+            <div class="right">
+                <a href="{% url 'Registro2' %}">Acceso Becarios</a>
+                <a href="{% url 'Registro4' %}">Acceso Administradores</a>
+                <a href="{% url 'Registro1' %}">Acceso Coordinadores</a>
+                <a href="{% url 'Registro5' %}">Acceso Aliados</a>
+                <a href="{% url 'Registro3' %}">Acceso Donantes</a>
+            </div>
+        </div>
+        <div class="bottom-bar">
+            <div class="left">
+                <a href="{% url 'Home' %}">INICIO</a>
+                <a href="{% url 'Blog' %}">BLOG</a>
+                <a href="{% url 'Nosotros' %}">SOBRE NOSOTROS</a>
+                <a href="{% url 'Convocatorias' %}">CONVOCATORIAS</a>
+            </div>
+            <div class="right">
+                <a href="{% url 'donaciones' %}" class="donate-button">Quiero Donar</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido dinámico -->
+    <main>
+        {% block content %}
+        
+        {% endblock %}
+    </main>
+
+<!-- Footer -->
+<footer class="footer">
+    <svg class="footer-wave-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 100" preserveAspectRatio="none">
+      <path class="footer-wave-path" d="M851.8,100c125,0,288.3-45,348.2-64V0H0v44c3.7-1,7.3-1.9,11-2.9C80.7,22,151.7,10.8,223.5,6.3C276.7,2.9,330,4,383,9.8 c52.2,5.7,103.3,16.2,153.4,32.8C623.9,71.3,726.8,100,851.8,100z"></path>
+    </svg>
+    <div class="footer-content">
+      <div class="footer-content-column">
+        <div class="footer-logo">
+          <a class="footer-logo-link" href="{% url 'Home' %}">
+            <span class="hidden-link-text">Hope for Learning</span>
+            <h1>Hope for Learning</h1>
+          </a>
+        </div>
+      </div>
+      <div class="footer-content-column">
+        <div class="footer-menu">
+          <h2 class="footer-menu-name"> Compañia</h2>
+          <ul id="menu-company" class="footer-menu-list">
+            <li class="menu-item menu-item-type-post_type menu-item-object-page">
+              <a href="#">Empoderamos a estudiantes con oportunidades educativas a 
+                través de nuestras becas. Nuestro compromiso es construir un futuro 
+                lleno de aprendizaje y crecimiento para quienes más lo necesitan. 
+                Únete a nuestra misión de transformar vidas a través de la educación</a>
+            </li>
+        </div>
+        <div class="footer-menu">
+            <h2 class="footer-menu-name"> Legal</h2>
+            <ul id="menu-legal" class="footer-menu-list">
+                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-170434">
+                    <a href="{% url 'aviso_privacidad' %}">Aviso de Privacidad</a>
+                </li>
+                <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                    <a href="{% url 'Terminos' %}">Terminos</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+      <div class="footer-content-column">
+        <div class="footer-menu">
+          <h2 class="footer-menu-name"> Enlaces rápidos</h2>
+          <ul id="menu-quick-links" class="footer-menu-list">
+            <li class="menu-item menu-item-type-custom menu-item-object-custom">
+              <a target="_blank" rel="noopener noreferrer" href="{% url 'Home' %}">INICIO</a>
+            </li>
+            <li class="menu-item menu-item-type-custom menu-item-object-custom">
+              <a target="_blank" rel="noopener noreferrer" href="{% url 'Blog' %}">BLOG</a>
+            </li>
+            <li class="menu-item menu-item-type-post_type menu-item-object-page">
+              <a href="{% url 'Convocatorias' %}">CONVOCATORIAS</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-content-column">
+        <div class="footer-call-to-action">
+          <h2 class="footer-call-to-action-title"> Conocenos</h2>
+          <p class="footer-call-to-action-description"> ¿Tiene alguna pregunta?</p>
+          <a class="footer-call-to-action-button button" href="{% url 'Nosotros' %}" target="_self"> Preciona aqui</a>
+        </div>
+        <div class="footer-call-to-action">
+          <h2 class="footer-call-to-action-title"> Envianos un correo </h2>
+          <p class="footer-call-to-action-link-wrapper"> <a class="footer-call-to-action-link" href="tel:0124-64XXXX" target="_self"> hopeforlearning53d@gmail.com </a></p>
+        </div>
+      </div>
+      <div class="footer-social-links"> <svg class="footer-social-amoeba-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 236 54">
+          <path class="footer-social-amoeba-path" d="M223.06,43.32c-.77-7.2,1.87-28.47-20-32.53C187.78,8,180.41,18,178.32,20.7s-5.63,10.1-4.07,16.7-.13,15.23-4.06,15.91-8.75-2.9-6.89-7S167.41,36,167.15,33a18.93,18.93,0,0,0-2.64-8.53c-3.44-5.5-8-11.19-19.12-11.19a21.64,21.64,0,0,0-18.31,9.18c-2.08,2.7-5.66,9.6-4.07,16.69s.64,14.32-6.11,13.9S108.35,46.5,112,36.54s-1.89-21.24-4-23.94S96.34,0,85.23,0,57.46,8.84,56.49,24.56s6.92,20.79,7,24.59c.07,2.75-6.43,4.16-12.92,2.38s-4-10.75-3.46-12.38c1.85-6.6-2-14-4.08-16.69a21.62,21.62,0,0,0-18.3-9.18C13.62,13.28,9.06,19,5.62,24.47A18.81,18.81,0,0,0,3,33a21.85,21.85,0,0,0,1.58,9.08,16.58,16.58,0,0,1,1.06,5A6.75,6.75,0,0,1,0,54H236C235.47,54,223.83,50.52,223.06,43.32Z"></path>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="footer-copyright-wrapper">
+        <p class="footer-copyright-text">
+          <a class="footer-copyright-link" href="#" target="_self">©2020. | Diseñado por: Hope for Learning. | Reservados todos los derechos. </a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

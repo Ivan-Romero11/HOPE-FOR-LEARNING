@@ -1,0 +1,105 @@
+{% extends 'Becarios/base.html' %}
+
+{% block title %}
+Programas Disponibles
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h2 class="display-5 fw-bold text-primary">Programas Disponibles</h2>
+        <p class="text-muted">Encuentra un programa adecuado para ti y ¡únete ahora!</p>
+    </div>
+
+    <!-- Campo de búsqueda -->
+    <div class="mb-4">
+        <input type="text" id="searchInput" class="form-control" placeholder="Buscar programa por nombre...">
+    </div>
+
+    {% if programas %}
+    <div id="programasContainer" class="row g-4">
+        {% for programa in programas %}
+        <div class="col-lg-4 col-md-6 programa-item">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h5 class="card-title mb-0">{{ programa.nombre_programa }}</h5>
+                </div>
+                <div class="card-body">
+                    {% if programa.foto %}
+                    <div class="text-center mb-3">
+                        <img src="{{ programa.foto.url }}" alt="Imagen del programa {{ programa.nombre_programa }}" class="img-fluid" style="max-height: 200px; object-fit: cover;">
+                    </div>
+                    {% endif %}
+                    <p class="card-text text-muted">{{ programa.descripcion|truncatewords:20 }}</p>
+                    <ul class="list-unstyled small">
+                        <li><strong>Inicio:</strong> {{ programa.fecha_inicio }}</li>
+                        <li><strong>Fin:</strong> {{ programa.fecha_fin }}</li>
+                        <li><strong>Inscritos:</strong> {{ programa.becarios_inscritos }}</li>
+                        <li><strong>Estatus:</strong> 
+                            <span class="badge 
+                                {% if programa.estatus == 'activo' %}bg-success
+                                {% elif programa.estatus == 'inactivo' %}bg-secondary
+                                {% else %}bg-warning
+                                {% endif %}">{{ programa.estatus|title }}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-light text-center">
+                    {% if request.user.becario in programa.becarios.all %}
+                        <button class="btn btn-success btn-sm" disabled>Inscrito</button>
+                    {% else %}
+                        <a href="{% url 'inscribir_programa' programa.id %}" class="btn btn-primary btn-sm" id="inscribir-btn-{{ programa.id }}">
+                            Inscribirme
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-warning text-center" role="alert">
+        No hay programas disponibles en este momento. Vuelve más tarde.
+    </div>
+    {% endif %}
+</div>
+
+<!-- Mostrar el mensaje de éxito -->
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>¡Éxito!</strong> {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% block extra_js %}
+<script>
+    // Desactivar el botón de inscripción una vez que se hace clic
+    {% for programa in programas %}
+    document.getElementById("inscribir-btn-{{ programa.id }}").addEventListener("click", function() {
+        this.disabled = true;
+        this.innerText = "Inscrito";  // Cambiar el texto del botón
+    });
+    {% endfor %}
+
+    // Funcionalidad del buscador
+    const searchInput = document.getElementById("searchInput");
+    const programasContainer = document.getElementById("programasContainer");
+    const programas = document.querySelectorAll(".programa-item");
+
+    searchInput.addEventListener("input", function() {
+        const searchTerm = searchInput.value.toLowerCase();
+        programas.forEach(programa => {
+            const title = programa.querySelector(".card-title").textContent.toLowerCase();
+            if (title.includes(searchTerm)) {
+                programa.style.display = "";
+            } else {
+                programa.style.display = "none";
+            }
+        });
+    });
+</script>
+{% endblock %}
+{% endblock %}

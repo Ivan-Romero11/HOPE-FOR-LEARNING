@@ -1,0 +1,473 @@
+<!-- base.html--Becarios -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}HOPE FOR LEARNING{% endblock %}</title>
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f2f5;
+      color: #333;
+    }
+
+    /* Estilo para la cabecera */
+    .header {
+      background-color: #002f6c;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .header .logo {
+      font-size: 26px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .header .menu-icon {
+      cursor: pointer;
+      font-size: 22px;
+    }
+
+    /* Estilo del menú desplegable */
+    .menu {
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background-color: #002f6c;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: none;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.4s ease;
+    }
+
+    .menu.show {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .menu a {
+      color: #ffcc00;
+      text-decoration: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      border-bottom: 1px solid #ffcc00;
+    }
+
+    .menu a:hover {
+      color: #ffffff;
+      background-color: #0056b3;
+    }
+
+    .menu a i {
+      margin-right: 8px;
+    }
+
+    /* Estilo del contenido */
+    .content {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .welcome {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .welcome img {
+      border-radius: 50%;
+      margin-right: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .welcome div h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #002f6c;
+    }
+
+    .welcome div p {
+      margin: 5px 0;
+      font-size: 16px;
+      color: #666;
+    }
+
+    /* Notificación */
+    .notification {
+      background-color: #fffbdb;
+      color: #856404;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .notification i {
+      margin-right: 10px;
+    }
+
+    /* Estilos del formulario */
+    .form-container {
+      background-color: #ffffff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+      text-align: left;
+      max-width: 400px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .form-container h2 {
+      font-size: 22px;
+      color: #002f6c;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .form-container label {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .form-container input[type="file"],
+    .form-container input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-container input[type="text"]:focus,
+    .form-container input[type="file"]:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    .form-container button {
+      background-color: #007bff;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-container button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Estilos del pie de página */
+    .footer {
+      background-color: #002f6c;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Mejoras en la responsividad */
+    @media (max-width: 600px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .menu {
+        right: 0;
+        left: 0;
+      }
+
+      .welcome {
+        flex-direction: column;
+      }
+
+      .welcome img {
+        margin-bottom: 15px;
+      }
+
+      .form-container {
+        padding: 15px;
+      }
+    }
+
+           /* Footer */
+.footer-distributed{
+	background: #004481;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+	box-sizing: border-box;
+	width: 100%;
+	text-align: left;
+	font: bold 16px sans-serif;
+	padding: 55px 50px;
+}
+
+.footer-distributed .footer-left,
+.footer-distributed .footer-center,
+.footer-distributed .footer-right{
+	display: inline-block;
+	vertical-align: top;
+}
+
+/* Footer left */
+
+.footer-distributed .footer-left{
+	width: 40%;
+}
+
+/* The company logo */
+
+.footer-distributed h3{
+	color:  #ffffff;
+	font: normal 36px 'Open Sans', cursive;
+	margin: 0;
+}
+
+.footer-distributed h3 span{
+	color:  lightseagreen;
+}
+
+/* Footer links */
+
+.footer-distributed .footer-links{
+	color:  #ffffff;
+	margin: 20px 0 12px;
+	padding: 0;
+}
+
+.footer-distributed .footer-links a{
+	display:inline-block;
+	line-height: 1.8;
+  font-weight:400;
+	text-decoration: none;
+	color:  inherit;
+}
+
+.footer-distributed .footer-company-name{
+	color:  #ffffff;
+	font-size: 14px;
+	font-weight: normal;
+	margin: 0;
+}
+
+/* Footer Center */
+
+.footer-distributed .footer-center{
+	width: 35%;
+}
+
+.footer-distributed .footer-center i{
+
+	color: #ffffff;
+	font-size: 25px;
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 42px;
+	margin: 10px 15px;
+	vertical-align: middle;
+}
+
+.footer-distributed .footer-center i.fa-envelope{
+	font-size: 17px;
+	line-height: 38px;
+}
+
+.footer-distributed .footer-center p{
+	display: inline-block;
+	color: #ffffff;
+  font-weight:400;
+	vertical-align: middle;
+	margin:0;
+}
+
+.footer-distributed .footer-center p span{
+	display:block;
+	font-weight: normal;
+	font-size:14px;
+	line-height:2;
+}
+
+.footer-distributed .footer-center p a{
+	color:  lightseagreen;
+	text-decoration: none;;
+}
+
+.footer-distributed .footer-links a:before {
+  content: "|";
+  font-weight:300;
+  font-size: 20px;
+  left: 0;
+  color: #fff;
+  display: inline-block;
+  padding-right: 5px;
+}
+
+.footer-distributed .footer-links .link-1:before {
+  content: none;
+}
+
+/* Footer Right */
+
+.footer-distributed .footer-right{
+	width: 20%;
+}
+
+.footer-distributed .footer-company-about{
+	line-height: 20px;
+	color:  #92999f;
+	font-size: 13px;
+	font-weight: normal;
+	margin: 0;
+}
+
+.footer-distributed .footer-company-about span{
+	display: block;
+	color:  #ffffff;
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.footer-distributed .footer-icons{
+	margin-top: 25px;
+}
+
+.footer-distributed .footer-icons a{
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+	background-color:  #33383b;
+	border-radius: 2px;
+
+	font-size: 20px;
+	color: #ffffff;
+	text-align: center;
+	line-height: 35px;
+
+	margin-right: 3px;
+	margin-bottom: 5px;
+}  
+    
+
+.navbar {
+    display: flex;
+    gap: 15px; /* Espaciado entre enlaces */
+    align-items: center;
+}
+
+.navbar a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #ffffff;
+    background-color: #0056b3;
+
+    border-radius: 4px;
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column; /* Los enlaces estarán en vertical */
+        align-items: flex-start;
+    }
+}
+
+.logout-button {
+        color: white; /* Texto blanco */
+        background-color: #ff4d4d; /* Rojo claro */
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .logout-button:hover {
+        background-color: #cc0000; /* Rojo más oscuro */
+        color: white; /* Asegura que el texto siga siendo blanco */
+    }
+    </style>
+</head>
+<body>
+  <div class="header">
+      <div class="logo">HOPE FOR LEARNING</div>
+      <nav class="navbar">
+        <a href="{% url 'base' %}"><i class="fas fa-home"></i> Inicio</a>
+        <a href="{% url 'seccmibeca' %}"><i class="fas fa-graduation-cap"></i> Mi beca</a>
+        <a href="{% url 'seccmiscali' %}"><i class="fas fa-file-alt"></i> Mis calificaciones</a>
+        <a href="{% url 'seccdatos' %}"><i class="fas fa-id-card"></i> Mis datos</a>
+        <a href="{% url 'lista_programas' %}"><i class="fas fa-id-card"></i> Programas</a>
+        <a href="{% url 'cerrar_sesion' %}" class="logout-button"><i class="fas fa-arrow-left"></i> Cerrar sesión</a>
+    </nav>    
+  </div>
+
+  <!-- Contenido dinámico -->
+  <main>
+      {% block content %}
+
+      {% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer-distributed">
+      <div class="footer-left">
+          <h3>HOPE FOR <span>LEARNING</span></h3><br><br><br><br><br>
+          <p class="footer-company-name"><strong>Hope For Learning © 2024</strong></p>
+      </div>
+      <div class="footer-center">
+          <div><i class="fa fa-map-marker"></i><p><span>Manzanillo-Cihuatlan Km. 20</span> 28860 Manzanillo, Col.</p></div>
+          <div><i class="fa fa-phone"></i><p>+523143311207</p></div>
+          <div><i class="fa fa-envelope"></i><p><a href="mailto:support@company.com">support@hopeforlearning.com</a></p></div>
+      </div>
+      <div class="footer-right">
+          <p class="footer-company-about"><span>Sobre la compañia</span>Una aplicacion web creada por ingenieros de la universidad de colima para la facultad de ingenieria electromecanica.</p>
+          <div class="footer-icons"></div>
+      </div>
+  </footer>
+
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

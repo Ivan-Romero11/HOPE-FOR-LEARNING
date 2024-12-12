@@ -1,0 +1,86 @@
+{% extends 'Blog/blog.html' %}
+{% load static %}
+{% block title %}
+    Sección 1
+{% endblock %}
+
+{% block content %}
+<!-- Contenedor principal con cuadro de fondo más ancho -->
+<div class="article-container" style="max-width: 1200px; margin: 50px auto; padding: 40px; background: #ffffff; border-radius: 25px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); font-family: 'Arial', sans-serif;">
+    <!--Hero-->
+    <div class="hero-section" style="position: relative; height: 400px; background-color: #333; border-radius: 20px; overflow: hidden;">
+        <!-- Imagen de fondo -->
+        <img src="{% static 'images/s1.jpg' %}" alt="Imagen Educativa" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(50%); border-radius: 20px;">
+        
+        <!-- Texto centrado dentro de la sección hero -->
+        <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; text-align: center; font-size: 36px; font-weight: bold;">
+            <h1>La importancia de la educación</h1>
+            <p style="font-size: 20px; font-weight: normal;">Transformando el futuro a través del conocimiento</p>
+        </div>
+    </div>
+    
+    
+    <!-- Contenido principal con texto -->
+    <div class="article-text" style="text-align: justify; line-height: 1.8; font-size: 20px; color: #333333; margin-top: 30px;">
+        <h2 style="font-size: 32px; font-weight: bold; color: #2967b9; text-transform: uppercase; margin-bottom: 25px;">Un vistazo al impacto de la educación</h2>
+
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            La educación es uno de los pilares fundamentales del desarrollo personal y profesional. En un mundo cada vez más competitivo, obtener una educación superior puede ser el factor que marque la diferencia entre el éxito y la oportunidad perdida. A través de la educación, no solo se adquieren conocimientos técnicos, sino también habilidades críticas que permiten a los individuos enfrentarse a los desafíos del entorno profesional. Las becas juegan un papel fundamental en este proceso, ya que brindan la oportunidad de acceder a una educación de calidad, independientemente de las circunstancias económicas.
+        </p>
+
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Uno de los beneficios más evidentes de la educación superior es el acceso a mejores oportunidades laborales. Los estudios han demostrado que las personas con títulos universitarios tienen más probabilidades de obtener empleos bien remunerados, con mayores beneficios y estabilidad laboral. Además, la educación superior abre puertas en sectores donde se valoran las habilidades especializadas, como la ingeniería, la medicina, el derecho y la tecnología.
+        </p>
+
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Los estudios revelan que aquellos con educación superior ganan en promedio un salario significativamente más alto que aquellos que no han terminado la universidad. Según el Foro Económico Mundial, las personas con un título universitario ganan, en promedio, un 60% más que aquellos con solo la educación secundaria. Además, la educación universitaria abre puertas a puestos de trabajo más especializados y con mayor nivel de responsabilidad.
+        </p>
+
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            La educación no solo se trata de adquirir conocimiento técnico. Los estudios superiores también ayudan a los estudiantes a desarrollar habilidades personales y sociales, como la capacidad de trabajo en equipo, la resolución de problemas, la comunicación efectiva y el liderazgo. Estas habilidades son altamente valoradas por los empleadores y son esenciales para el éxito a largo plazo.
+        </p>
+
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Aunque la educación superior es crucial para el desarrollo profesional, el costo de la matrícula y otros gastos relacionados con la educación pueden ser barreras significativas para muchas personas. Las becas son una solución importante para superar estas barreras. Al financiar total o parcialmente los estudios, las becas permiten que estudiantes con talento, pero con pocos recursos económicos, puedan acceder a una educación de calidad y transformar su futuro.
+        </p>
+
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            La educación es una inversión en el futuro, tanto a nivel personal como profesional. Al obtener un título universitario, los individuos no solo mejoran sus oportunidades de empleo y salario, sino que también desarrollan habilidades valiosas que les servirán a lo largo de su vida. Las becas son esenciales para garantizar que todos, sin importar su origen socioeconómico, tengan acceso a estas oportunidades. Invertir en educación es una de las decisiones más inteligentes que puede tomar una persona, y las becas ayudan a hacer esa inversión posible.
+        </p>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #cce7ff, #f6f9fc);
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .article-container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 30px auto;
+        max-width: 80%;
+    }
+
+    .hero-section {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .hero-section h2 {
+        color: #004080;
+        font-weight: bold;
+        text-shadow: 1px 1px 5px rgba(0, 64, 128, 0.3);
+    }
+
+    .overlay {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 15px;
+    }
+</style>
+
+
+{% endblock %}

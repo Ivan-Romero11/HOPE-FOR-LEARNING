@@ -1,0 +1,90 @@
+{% extends 'Blog/blog.html' %}
+{% load static %}
+{% block title %}
+    Sección 7
+{% endblock %}
+
+{% block content %}
+<!-- Contenedor principal con cuadro de fondo más ancho -->
+<div class="article-container" style="max-width: 1200px; margin: 50px auto; padding: 40px; background: #ffffff; border-radius: 25px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); font-family: 'Arial', sans-serif;">
+
+    <!--Hero-->
+    <div class="hero-section" style="position: relative; height: 400px; background-color: #333; border-radius: 20px; overflow: hidden;">
+        <!-- Imagen de fondo -->
+        <img src="{% static 'images/s8.jpg' %}" alt="Imagen Educativa" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(50%); border-radius: 20px;">
+    
+    <!-- Contenido principal con texto -->
+        <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; text-align: center; font-size: 36px; font-weight: bold;">
+            <h1>La Importancia de las Comunidades en el Acceso a la Educación</h1>
+            <p style="font-size: 20px; font-weight: normal;">Exploramos cómo las comunidades influyen en la educación y el desarrollo</p>
+        </div>
+    </div>
+    
+    <!-- Contenido principal con texto -->
+    <div class="article-text" style="text-align: justify; line-height: 1.8; font-size: 20px; color: #333333; margin-top: 30px;">
+        <h2 style="font-size: 32px; font-weight: bold; color: #2967b9; text-transform: uppercase; margin-bottom: 25px;">El Papel de las Comunidades en la Educación</h2>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Las comunidades juegan un papel fundamental en la educación, proporcionando un entorno de apoyo que fomenta el aprendizaje y el desarrollo de sus miembros. Desde la creación de espacios seguros para el estudio hasta la organización de programas de tutoría y becas, las comunidades actúan como un pilar esencial para el éxito educativo. En este artículo, exploramos cómo las comunidades pueden influir positivamente en el acceso y la calidad de la educación, especialmente para aquellos en situaciones vulnerables.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Las comunidades pueden ayudar a romper las barreras económicas, sociales y culturales que limitan el acceso a la educación. Iniciativas comunitarias como bibliotecas locales, centros de tutoría y grupos de estudio brindan a los estudiantes recursos valiosos que, de otro modo, no estarían a su alcance. Estos espacios no solo proporcionan acceso a materiales de estudio y tecnología, sino que también fomentan la colaboración y la motivación.
+        </p>
+       
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Las comunidades también pueden desempeñar un papel clave en la identificación de estudiantes con necesidades especiales o en riesgo de abandonar sus estudios. Mediante programas de monitoreo y apoyo, es posible ayudar a estos estudiantes a mantenerse en la escuela y a alcanzar sus metas académicas.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Una de las mayores ventajas de pertenecer a una comunidad es el sentido de pertenencia y apoyo que esta proporciona. Los estudiantes que se sienten apoyados y valorados son más propensos a tener éxito en sus estudios. Este entorno de respaldo emocional y social ayuda a reducir el estrés académico y fomenta un estado mental positivo, lo cual es crucial para el aprendizaje efectivo.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            El involucramiento de la comunidad también impulsa la confianza y la autoestima, ya que los estudiantes se sienten parte de algo más grande. Esto es especialmente importante en entornos donde los recursos son limitados y la motivación puede ser baja.
+        </p>
+        
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Las comunidades pueden trabajar en colaboración con escuelas y universidades para proporcionar apoyo adicional a los estudiantes. Programas como tutorías, orientación académica y mentorías pueden mejorar el rendimiento y la retención de los estudiantes. Además, muchas comunidades promueven eventos y talleres que refuerzan la educación formal con aprendizaje práctico y aplicado.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            El papel de las comunidades en la educación es invaluable. Al proporcionar apoyo emocional, recursos y oportunidades de aprendizaje, las comunidades ayudan a garantizar que los estudiantes tengan las herramientas que necesitan para tener éxito. Invertir en el fortalecimiento de las comunidades es invertir en un futuro educativo más inclusivo y accesible para todos.
+        </p>
+    </div>                
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #cce7ff, #f6f9fc);
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .article-container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 30px auto;
+        max-width: 80%;
+    }
+
+    .hero-section {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .hero-section h2 {
+        color: #004080;
+        font-weight: bold;
+        text-shadow: 1px 1px 5px rgba(0, 64, 128, 0.3);
+    }
+
+    .overlay {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 15px;
+    }
+</style>
+
+
+{% endblock %}

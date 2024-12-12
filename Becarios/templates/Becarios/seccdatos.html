@@ -1,0 +1,186 @@
+{% extends 'Becarios/base.html' %}
+{% load static %}
+{% block title %}
+    Página Principal
+{% endblock %}
+
+{% block content %}
+
+<style>
+            .content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .welcome {
+            background-color: #f0e68c;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .welcome i {
+            margin-right: 10px;
+        }
+        .profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .profile .avatar {
+            background-color: #ff8c00;
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            margin-right: 15px;
+        }
+        .profile .info {
+            font-size: 16px;
+        }
+        .profile .info .name {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .accordion {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .accordion-item {
+            border-bottom: 1px solid #ddd;
+        }
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+        .accordion-item .accordion-header {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .accordion-item .accordion-header:hover {
+            background-color: #f0f0f0;
+        }
+        .accordion-item .accordion-header i {
+            color: #007bff;
+            transition: transform 0.3s ease;
+        }
+        .accordion-item.active .accordion-header i {
+            transform: rotate(180deg);
+        }
+        .accordion-item .accordion-body {
+            display: none;
+            padding: 15px 20px;
+            border-top: 1px solid #ddd;
+        }
+</style>
+
+<div class="content">
+    <div class="profile">
+        <div class="avatar">
+            <img src="{{ usuario.foto.url }}" alt="Avatar de {{ usuario.nombre }}" width="50" height="50" style="border-radius: 50%;">
+        </div>
+        <div class="info">
+            <div class="name">¡Hola {{ usuario.nombre }} {{ usuario.apellido_paterno }}!</div>
+            <div>{{ info_academica.semestre }} semestre de universidad</div>
+        </div>
+    </div>
+    <div class="welcome">
+        <i class="fas fa-bell"></i>
+        ¡Bienvenid@ a tu plataforma!
+    </div>
+    <div class="accordion">
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <div><i class="fas fa-id-card"></i> 2. Datos personales</div>
+                <i class="fas fa-chevron-up"></i>
+            </div>
+            <div class="accordion-body">
+                <p>Nombre: {{ usuario.nombre }} {{ usuario.apellido_paterno }} {{ usuario.apellido_materno }}</p>
+                <p>Fecha de nacimiento: {{ usuario.fecha_nacimiento }}</p>
+                <p>Género: {{ usuario.genero }}</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <div><i class="fas fa-graduation-cap"></i> 3. Beca</div>
+                <i class="fas fa-chevron-up"></i>
+            </div>
+            <div class="accordion-body">
+                {% if estados_beca %}
+                    <p>Estado de la beca: {{ estados_beca.estado }}</p>
+                    <p>Comentarios: {{ estados_beca.comentarios }}</p>
+                    <p>Fecha de cambio: {{ estados_beca.fecha_cambio }}</p>
+                {% else %}
+                    <p>No hay información sobre el estado de la beca disponible.</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <div><i class="fas fa-book"></i> 4. Datos escolares</div>
+                <i class="fas fa-chevron-up"></i>
+            </div>
+            <div class="accordion-body">
+                <p>Institución: {{ info_academica.institucion_educativa }}</p>
+                <p>Carrera: {{ info_academica.carrera }}</p>
+                <p>Promedio: {{ info_academica.promedio }}</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <div><i class="fas fa-home"></i> 5. Domicilio</div>
+                <i class="fas fa-chevron-up"></i>
+            </div>
+            <div class="accordion-body">
+                <p>Dirección: {{ domicilio.direccion }}</p>
+                <p>Ciudad: {{ domicilio.ciudad }}</p>
+                <p>Estado: {{ domicilio.estado }}</p>
+                <p>Código postal: {{ domicilio.codigo_postal }}</p>
+                <p>País: {{ domicilio.pais }}</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <div><i class="fas fa-address-book"></i> 6. Datos de contacto</div>
+                <i class="fas fa-chevron-up"></i>
+            </div>
+            <div class="accordion-body">
+                <p>Teléfono: {{ usuario.telefono }}</p>
+                <p>Email: {{ usuario.email }}</p>
+            </div>
+        </div>
+</div>
+
+
+<script>
+    // Script para alternar los acordeones
+    document.querySelectorAll('.accordion-header').forEach(item => {
+        item.addEventListener('click', () => {
+            const parent = item.parentElement;
+            const body = parent.querySelector('.accordion-body');
+            
+            if (body.style.display === 'block') {
+                body.style.display = 'none';
+                parent.classList.remove('active');
+            } else {
+                document.querySelectorAll('.accordion-body').forEach(body => body.style.display = 'none');
+                document.querySelectorAll('.accordion-item').forEach(acc => acc.classList.remove('active'));
+                
+                body.style.display = 'block';
+                parent.classList.add('active');
+            }
+        });
+    });
+</script>
+
+{% endblock %}

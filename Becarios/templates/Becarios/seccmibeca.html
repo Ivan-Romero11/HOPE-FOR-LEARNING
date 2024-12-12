@@ -1,0 +1,259 @@
+{% extends 'Becarios/base.html' %}
+{% load static %}
+
+{% block title %}
+    Página Principal
+{% endblock %}
+
+{% block content %}
+<style>
+/* Contenedor general */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Sección de bienvenida */
+.welcome-section {
+    background-color: #e0f7fa;
+    padding: 40px;
+    margin-bottom: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    transition: box-shadow 0.3s;
+}
+
+.welcome-section:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+/* Avatar de usuario */
+.avatar {
+    background-color: #0097a7;
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 151, 167, 0.3);
+}
+
+.avatar:hover {
+    transform: scale(1.15);
+    box-shadow: 0 6px 15px rgba(0, 151, 167, 0.5);
+}
+
+.user-details h2 {
+    margin: 0;
+    font-size: 32px;
+    color: #00796b;
+    font-weight: 700;
+}
+
+.user-details p {
+    margin: 5px 0 0;
+    font-size: 18px;
+    color: #555;
+    font-style: italic;
+}
+
+/* Notificación */
+.notification {
+    flex-grow: 1;
+    max-width: 450px;
+}
+
+.notification .alert {
+    background-color: #fff3cd;
+    padding: 20px;
+    border-radius: 10px;
+    color: #856404;
+    font-size: 18px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: background-color 0.3s;
+}
+
+.notification .alert:hover {
+    background-color: #ffe8a1;
+}
+
+.notification .alert::before {
+    font-size: 22px;
+}
+
+/* Sección de estatus */
+.status-section {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 25px;
+    transition: box-shadow 0.3s;
+}
+
+.status-section:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.status-card h3 {
+    margin-top: 0;
+    font-size: 26px;
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #b2ebf2;
+    padding-bottom: 10px;
+    font-weight: 700;
+}
+
+.status-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.status-left, .status-right {
+    flex: 1;
+    min-width: 300px;
+}
+
+.status-left p, .status-right p {
+    margin: 12px 0;
+    font-size: 18px;
+    color: #495057;
+    padding-left: 30px;
+    position: relative;
+}
+
+.status-left p::before, .status-right p::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #29b6f6;
+    font-size: 22px;
+    line-height: 1;
+}
+
+/* Texto de estatus */
+.status {
+    color: #d32f2f;
+    font-weight: bold;
+}
+
+/* Efecto de hover en texto de estatus */
+.status-info p:hover {
+    color: #00796b;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+    .welcome-section {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 30px;
+    }
+
+    .status-info {
+        flex-direction: column;
+    }
+
+    .status-left, .status-right {
+        width: 100%;
+    }
+
+    .avatar {
+        width: 75px;
+        height: 75px;
+        font-size: 24px;
+    }
+
+    .user-details h2 {
+        font-size: 28px;
+    }
+
+    .user-details p, .notification .alert, .status-left p, .status-right p {
+        font-size: 16px;
+    }
+}
+
+/* Hover en secciones */
+.welcome-section, .status-section {
+    transition: box-shadow 0.3s;
+}
+
+.welcome-section:hover, .status-section:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Colores vibrantes y sombras adicionales */
+.notification .alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notification .alert:hover {
+    background-color: #ffe8a1;
+}
+
+</style>
+
+<div class="container">
+    <div class="welcome-section">
+        <div class="user-info">
+            <div class="avatar">
+                <!-- Mostrar las iniciales del usuario o foto de perfil -->
+                <span>{{ usuario.nombre|slice:":1" }}{{ usuario.apellido_paterno|slice:":1" }}</span>
+            </div>
+            <div class="user-details">
+                <h2>¡Hola {{ usuario.nombre }} {{ usuario.apellido_paterno }}!</h2>
+                <p>{{ grado_escolar }} de universidad</p>  <!-- Mostrar el nivel académico del becario -->
+            </div>
+        </div>
+        <div class="notification">
+            <div class="alert">
+                <p>¡Bienvenido a tu plataforma!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="status-section">
+        <div class="status-card">
+            <h3>ESTATUS GENERAL</h3>
+            <div class="status-info">
+                <div class="status-left">
+                    <p><strong>Programa de beca:</strong> Adelante con tu Universidad</p>
+                </div>
+                <div class="status-right">
+                    <p><strong>Estatus en el programa:</strong> {{ estatus_beca }}</p>
+                    <p><strong>Grado escolar:</strong> {{ grado_escolar }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'Blog/blog.html' %}
+{% load static %}
+{% block title %}
+    Sección 2
+{% endblock %}
+
+{% block content %}
+<!-- Contenedor principal con cuadro de fondo más ancho -->
+<div class="article-container" style="max-width: 1200px; margin: 50px auto; padding: 40px; background: #ffffff; border-radius: 25px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); font-family: 'Arial', sans-serif;">
+
+    <!--Hero-->
+    <div class="hero-section" style="position: relative; height: 400px; background-color: #333; border-radius: 20px; overflow: hidden;">
+        <!-- Imagen de fondo -->
+        <img src="{% static 'images/s3.jpg' %}" alt="Imagen Educativa" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(50%); border-radius: 20px;">
+    
+        <!-- Texto centrado dentro de la sección hero -->
+        <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; text-align: center; font-size: 36px; font-weight: bold;">
+            <h1>Tipos de Becas y Cómo Elegir la Mejor para Ti</h1>
+            <p style="font-size: 20px; font-weight: normal;">Transformando tu educación, sin preocupaciones económicas</p>
+        </div>
+    </div>
+    
+
+    <!-- Contenido principal con texto -->
+    <div class="article-text" style="text-align: justify; line-height: 1.8; font-size: 20px; color: #333333; margin-top: 30px;">
+        <h2 style="font-size: 32px; font-weight: bold; color: #2967b9; text-transform: uppercase; margin-bottom: 25px;">Las Becas y Su Importancia</h2>
+
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Las becas son una excelente oportunidad para acceder a la educación superior sin la carga de grandes deudas. Sin embargo, con la amplia variedad de becas disponibles, elegir la más adecuada puede ser una tarea desafiante. Existen varios tipos de becas, cada una con requisitos y condiciones diferentes, por lo que es importante conocerlas bien antes de aplicar. En este artículo, exploraremos los tipos de becas más comunes y daremos algunos consejos sobre cómo elegir la mejor opción para tus necesidades.
+        </p>
+
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Las becas por mérito académico son otorgadas a estudiantes que han demostrado un rendimiento académico sobresaliente. Este tipo de beca está basado en el logro académico, ya sea en la escuela secundaria o en estudios previos. Los estudiantes que aplican a estas becas deben haber mantenido un promedio alto y, en algunos casos, presentar resultados sobresalientes en exámenes estandarizados o en actividades extracurriculares.
+        </p>
+
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Este tipo de beca es ideal para estudiantes que se han destacado en sus estudios y quieren continuar su formación sin preocuparse por los costos. Las becas por mérito académico pueden ser completas o parciales, cubriendo desde la matrícula hasta otros gastos como alojamiento y libros.
+        </p>
+
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Las becas por necesidades económicas están diseñadas para estudiantes que enfrentan dificultades financieras para continuar con su educación. A menudo, estas becas se otorgan a estudiantes cuyos ingresos familiares están por debajo de un cierto umbral, lo que les impide pagar el costo total de la educación superior.
+        </p>
+
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Este tipo de beca es crucial para garantizar que los estudiantes que tienen el potencial académico, pero carecen de los recursos económicos, puedan acceder a una educación universitaria. Las becas por necesidades económicas pueden cubrir parcialmente o en su totalidad los gastos de matrícula, libros y otros costos asociados con la educación.
+        </p>
+
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Algunas becas están dirigidas a estudiantes que destacan en deportes o actividades culturales. Estas becas son otorgadas a aquellos que tienen habilidades excepcionales en áreas como el fútbol, baloncesto, música, danza, teatro, entre otros. Las becas deportivas y culturales no solo permiten a los estudiantes continuar sus estudios, sino que también los incentivan a seguir perfeccionando sus habilidades en estas disciplinas.
+        </p>
+
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Los estudiantes que solicitan este tipo de becas deben demostrar su talento y compromiso con su deporte o actividad cultural, a través de logros y participación en competencias o presentaciones relevantes.
+        </p>
+
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Cada tipo de beca tiene sus propios requisitos de aplicación, por lo que es fundamental leer y entender los criterios específicos antes de postularse. Algunos requisitos comunes incluyen un promedio mínimo, la presentación de una carta de motivación, referencias académicas o personales, y en algunos casos, entrevistas.
+        </p>
+
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Elegir la beca adecuada depende de varios factores, incluyendo tu rendimiento académico, tu situación económica y tus intereses personales. Aquí algunos consejos:
+        </p>
+        <ul style="margin-bottom: 20px; font-size: 20px; color: #34495e;">
+            <li>Investiga todas las becas disponibles en tu área y revisa los requisitos detalladamente.</li>
+            <li>Prioriza las becas que mejor se adapten a tu perfil y necesidades.</li>
+            <li>Si es posible, consulta con un orientador educativo o consejero de tu institución para recibir ayuda sobre cómo aplicar.</li>
+        </ul>
+
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Las becas son una excelente oportunidad para continuar con tus estudios sin preocuparte por los costos. Al comprender los diferentes tipos de becas disponibles y cómo elegir la más adecuada para ti, puedes maximizar tus oportunidades y asegurar una educación superior de calidad. Recuerda que aplicar a una beca es un proceso competitivo, pero también es una inversión en tu futuro académico y profesional.
+        </p>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #cce7ff, #f6f9fc);
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .article-container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 30px auto;
+        max-width: 80%;
+    }
+
+    .hero-section {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .hero-section h2 {
+        color: #004080;
+        font-weight: bold;
+        text-shadow: 1px 1px 5px rgba(0, 64, 128, 0.3);
+    }
+
+    .overlay {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 15px;
+    }
+</style>
+
+
+{% endblock %}

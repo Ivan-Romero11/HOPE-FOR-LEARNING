@@ -1,0 +1,226 @@
+{% extends 'Blog/blog.html' %}
+{% load static %}
+{% block title %}
+    Página Principal
+{% endblock %}
+
+{% block content %}
+<!-- Carrusel con Bootstrap 5 -->
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+    <!-- Texto Fijo -->
+    <div class="carousel-fixed-caption text-center">
+        <h1 class="display-4">PROGRAMAS</h1>
+    </div>
+    
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+  
+    <div class="carousel-inner">
+        <div class="carousel-item active d-item">
+            <img src="{% static 'images/beca1.png' %}" class="d-block w-100 d-img" alt="Programas - Imagen 1">
+        </div>
+        <div class="carousel-item d-item">
+            <img src="{% static 'images/beca2.png' %}" class="d-block w-100 d-img" alt="Programas - Imagen 2">
+        </div>
+        <div class="carousel-item d-item">
+            <img src="{% static 'images/beca3.png' %}" class="d-block w-100 d-img" alt="Programas - Imagen 3">
+        </div>
+    </div>
+  
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+<!-- Sección de enlaces (Educación, Voluntariado, etc.) -->
+<nav class="section-links text-center">
+    <ul class="nav nav-pills justify-content-center mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="pills-educacion-tab" data-bs-toggle="pill" href="#pills-educacion" role="tab" aria-controls="pills-educacion" aria-selected="true">Educación</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="pills-voluntariado-tab" data-bs-toggle="pill" href="#pills-voluntariado" role="tab" aria-controls="pills-voluntariado" aria-selected="false">Voluntariado</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="pills-comunidades-tab" data-bs-toggle="pill" href="#pills-comunidades" role="tab" aria-controls="pills-comunidades" aria-selected="false">Comunidades</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="pills-emergencias-tab" data-bs-toggle="pill" href="#pills-emergencias" role="tab" aria-controls="pills-emergencias" aria-selected="false">Emergencias</a>
+        </li>
+    </ul>
+</nav><br>
+
+
+<style>
+   
+.card {
+    transition: transform 0.3s ease; 
+    overflow: hidden; 
+}
+
+.card:hover {
+    transform: scale(1.05); 
+}
+
+.card {
+    min-height: 350px;
+}
+
+.card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+}
+.card-body a.btn{
+    align-self: flex-start;
+}
+
+
+</style>
+
+<!-- Secciones de contenido -->
+<div class="tab-content" id="pills-tabContent">
+    <!-- Sección de contenido para Educación -->
+    <section class="tab-pane fade show active" id="pills-educacion" role="tabpanel" aria-labelledby="pills-educacion-tab">
+        <div class="row">
+            <article class="col-md-4">
+                <div class="card zoom-effect">
+                    <img src="{% static 'images/s1.jpg' %}" class="card-img-top" alt="Imagen de Educación 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Importancia de la educación</h5>
+                        <a href="{% url 'seccion1' %}" class="btn btn-primary">Leer más</a>
+                    </div>
+                </div>
+            </article>
+            <article class="col-md-4">
+                <div class="card zoom-effect">
+                    <img src="{% static 'images/s3.jpg' %}" class="card-img-top" alt="Imagen de Educación 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Impacto Transformador de las Becas Educativas</h5>
+                        <a href="{% url 'seccion2' %}" class="btn btn-primary">Leer más</a>
+                    </div>
+                </div>
+            </article>
+            <article class="col-md-4">
+                <div class="card zoom-effect">
+                    <img src="{% static 'images/s4.jpg' %}" class="card-img-top" alt="Imagen de Educación 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Superando Barreras en el Acceso a la Educación</h5>
+                        <a href="{% url 'seccion3' %}" class="btn btn-primary">Leer más</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+
+    <!-- Voluntariado -->
+<section class="tab-pane fade" id="pills-voluntariado" role="tabpanel" aria-labelledby="pills-voluntariado-tab">
+    <div class="row">
+        <article class="col-md-4">
+            <div class="card">
+                <img src="{% static 'images/ss6.jpg' %}" class="card-img-top" alt="Imagen de Voluntariado 1">
+                <div class="card-body">
+                    <h5 class="card-title">Un Acto de Solidaridad que Cambia Vidas</h5>
+                    <a href="{% url 'seccion4' %}" class="btn btn-primary">Leer más</a>
+                </div>
+            </div>
+        </article>
+        <article class="col-md-4">
+            <div class="card">
+                <img src="{% static 'images/s6.jpg' %}" class="card-img-top" alt="Imagen de Voluntariado 2">
+                <div class="card-body">
+                    <h5 class="card-title">Cómo el Voluntariado Impulsa la Educación en Comunidades Vulnerables</h5>
+                    <a href="{% url 'seccion5' %}" class="btn btn-primary">Leer más</a>
+                </div>
+            </div>
+        </article>
+        <article class="col-md-4">
+            <div class="card">
+                <img src="{% static 'images/s7.jpg' %}" class="card-img-top" alt="Imagen de Voluntariado 3">
+                <div class="card-body">
+                    <h5 class="card-title">Un Camino para Aprender y Crecer</h5>
+                    <a href="{% url 'seccion6' %}" class="btn btn-primary">Leer más</a>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+
+<!-- Comunidades -->
+<section class="tab-pane fade" id="pills-comunidades" role="tabpanel" aria-labelledby="pills-comunidades-tab">
+    <div class="row">
+        <article class="col-md-4">
+            <div class="card">
+                <img src="{% static 'images/s8.jpg' %}" class="card-img-top" alt="Imagen de Comunidades 1">
+                <div class="card-body">
+                    <h5 class="card-title">Fortaleciendo Comunidades a Través de la Educación</h5>
+                    <a href="{% url 'seccion7' %}" class="btn btn-primary">Leer más</a>
+                </div>
+            </div>
+        </article>
+        <article class="col-md-4">
+            <div class="card">
+                <img src="{% static 'images/s9.jpg' %}" class="card-img-top" alt="Imagen de Comunidades 2">
+                <div class="card-body">
+                    <h5 class="card-title">Rol de las Becas en el Desarrollo Comunitario</h5>
+                    <a href="{% url 'seccion8' %}" class="btn btn-primary">Leer más</a>
+                </div>
+            </div>
+        </article>
+        <article class="col-md-4">
+            <div class="card">
+                <img src="{% static 'images/ss1.jpg' %}" class="card-img-top" alt="Imagen de Comunidades 3">
+                <div class="card-body">
+                    <h5 class="card-title">Difusión de Información Sobre Becas</h5>
+                    <a href="{% url 'seccion9' %}" class="btn btn-primary">Leer más</a>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+
+<!-- Emergencias -->
+<section class="tab-pane fade" id="pills-emergencias" role="tabpanel" aria-labelledby="pills-emergencias-tab">
+    <div class="row">
+        <article class="col-md-4">
+            <div class="card">
+                <img src="{% static 'images/ss2.jpg' %}" class="card-img-top" alt="Imagen de Emergencias 1">
+                <div class="card-body">
+                    <h5 class="card-title">Plan de Emergencia Institucional</h5>
+                    <a href="{% url 'seccion10' %}" class="btn btn-primary">Leer más</a>
+                </div>
+            </div>
+        </article>
+        <article class="col-md-4">
+            <div class="card">
+                <img src="{% static 'images/ss5.jpg' %}" class="card-img-top" alt="Imagen de Emergencias 2">
+                <div class="card-body">
+                    <h5 class="card-title">Papel de las Becas en Situaciones de Emergencia</h5>
+                    <a href="{% url 'seccion11' %}" class="btn btn-primary">Leer más</a>
+                </div>
+            </div>
+        </article>
+        <article class="col-md-4">
+            <div class="card">
+                <img src="{% static 'images/ss4.jpg' %}" class="card-img-top" alt="Imagen de Emergencias 3">
+                <div class="card-body">
+                    <h5 class="card-title">Posibles Emergencias</h5>
+                    <a href="{% url 'seccion12' %}" class="btn btn-primary">Leer más</a>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+
+</div>
+{% endblock %}

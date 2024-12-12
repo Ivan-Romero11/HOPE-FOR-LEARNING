@@ -1,0 +1,98 @@
+{% extends 'Blog/blog.html' %}
+{% load static %}
+{% block title %}
+    Sección 4
+{% endblock %}
+
+{% block content %}
+<!-- Contenedor principal con cuadro de fondo más ancho -->
+<div class="article-container" style="max-width: 1200px; margin: 50px auto; padding: 40px; background: #ffffff; border-radius: 25px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); font-family: 'Arial', sans-serif;">
+
+    <!--Hero-->
+    <div class="hero-section" style="position: relative; height: 400px; background-color: #333; border-radius: 20px; overflow: hidden;">
+        <!-- Imagen de fondo -->
+        <img src="{% static 'images/ss6.jpg' %}" alt="Imagen Educativa" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(50%); border-radius: 20px;">
+    
+        <!-- Texto centrado dentro de la sección hero -->
+        <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; text-align: center; font-size: 36px; font-weight: bold;">
+            <h1>La Importancia del Voluntariado en el Desarrollo Personal y Profesional</h1>
+            <p style="font-size: 20px; font-weight: normal;">El voluntariado como herramienta para el crecimiento personal y profesional</p>
+        </div>  
+    </div>      
+    
+    <!-- Contenido principal con texto -->
+    <div class="article-text" style="text-align: justify; line-height: 1.8; font-size: 20px; color: #333333; margin-top: 30px;">
+        <h2 style="font-size: 32px; font-weight: bold; color: #2967b9; text-transform: uppercase; margin-bottom: 25px;">Impulsando tu Crecimiento Personal y Profesiona</h2>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            El voluntariado no solo es una actividad altruista que ayuda a las comunidades, sino que también tiene un impacto significativo en el desarrollo personal y profesional de quienes lo practican. Al ofrecer tu tiempo y habilidades a una causa, no solo estás contribuyendo al bienestar colectivo, sino que también estás adquiriendo experiencias y competencias que serán de gran valor en tu vida profesional. En este artículo, exploraremos cómo el voluntariado puede ser una herramienta poderosa para el crecimiento personal y el impulso de tu carrera profesional.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            El voluntariado ofrece una oportunidad única para aprender fuera del aula. Al trabajar con diversas organizaciones, puedes adquirir habilidades que van desde la resolución de problemas hasta la gestión de proyectos y el liderazgo. Estas habilidades son altamente valoradas por los empleadores, quienes buscan personas con experiencia práctica, iniciativa y capacidad para trabajar en equipo.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            El voluntariado también te permite descubrir nuevas áreas de interés y explorar profesiones que quizás no habías considerado. Esta experiencia práctica te ayuda a definir mejor tus metas profesionales y a desarrollar un portafolio que resalte tu capacidad para contribuir a la comunidad.
+        </p>
+        
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Una de las áreas más impactadas por el voluntariado es el desarrollo de habilidades sociales y emocionales. Trabajar en equipo, comunicarte eficazmente con personas de diferentes contextos y liderar iniciativas son solo algunas de las habilidades que puedes mejorar como voluntario. Estas competencias son esenciales no solo en el ámbito profesional, sino también en la vida personal, ya que contribuyen a tu capacidad para relacionarte con los demás de manera efectiva.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Además, el voluntariado te permite desarrollar una mayor empatía, lo que te convierte en una persona más consciente de las necesidades de los demás y de la importancia de trabajar por el bienestar colectivo.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            El voluntariado también puede mejorar tu empleabilidad. Muchos reclutadores valoran positivamente la experiencia de voluntariado, ya que demuestra tu compromiso social y tu capacidad para trabajar en proyectos colaborativos. Además, puede ayudarte a construir una red profesional, ya que el voluntariado a menudo te pone en contacto con personas influyentes en diferentes sectores.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Participar en programas de voluntariado relacionados con tu área de interés o carrera puede ser una forma excelente de adquirir experiencia relevante, lo que te permitirá destacar entre otros candidatos cuando busques empleo.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Algunas becas están específicamente diseñadas para apoyar a estudiantes que realizan actividades de voluntariado. Estas becas pueden cubrir gastos educativos o proporcionar una compensación por el tiempo dedicado a causas sociales. Si eres voluntario, te animamos a buscar becas que reconozcan tu contribución a la comunidad, ya que podrías calificar para obtener apoyo adicional en tu formación académica.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            El voluntariado es una excelente manera de contribuir a la sociedad, mientras desarrollas habilidades valiosas que impulsan tu crecimiento personal y profesional. Ya sea que estés buscando mejorar tu empleabilidad, explorar nuevas oportunidades o simplemente ayudar a los demás, el voluntariado es una experiencia enriquecedora que abre muchas puertas. No subestimes el valor de las horas que inviertes ayudando a los demás: estas horas pueden ser la clave para tu éxito futuro.
+        </p>
+    </div>        
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #cce7ff, #f6f9fc);
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .article-container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 30px auto;
+        max-width: 80%;
+    }
+
+    .hero-section {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .hero-section h2 {
+        color: #004080;
+        font-weight: bold;
+        text-shadow: 1px 1px 5px rgba(0, 64, 128, 0.3);
+    }
+
+    .overlay {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 15px;
+    }
+</style>
+
+
+{% endblock %}

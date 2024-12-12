@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Completo de Becarios</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Fondo y configuración global */
+  body {
+            background: linear-gradient(135deg, #d4e8fe, #fef9e7);
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: 'Lato', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            transition: background-color 0.6s ease-in-out;
+        }
+    
+        .container {
+            margin-top: 40px;
+            max-width: 1200px;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.3s ease;
+            overflow: hidden;
+        }
+    
+        /* Tarjeta con efecto hover */
+        .container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+    
+        /* Estilos de la tarjeta */
+        .card {
+            border: none;
+            border-radius: 15px;
+            background-color: #ffffff;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeIn 1.5s forwards ease-out;
+        }
+    
+        /* Efecto de entrada */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        /* Estilos del encabezado */
+        .card-header {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(to right, #007bff, #0056b3);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 123, 255, 0.4);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            overflow: hidden;
+            position: relative;
+        }
+    
+        .card-header:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(45deg, #0056b3, #007bff);
+            box-shadow: 0px 5px 20px rgba(0, 123, 255, 0.5);
+        }
+    
+        /* Secciones del formulario */
+        .form-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            background: #f9f9f9;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(40px);
+            animation: slideIn 1.5s forwards ease-out;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+    
+        /* Efecto de entrada */
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        .form-section:hover {
+            background-color: #f2f2f2;
+            transform: translateY(-5px);
+        }
+    
+        .form-section h5 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            letter-spacing: 0.7px;
+        }
+    
+        .form-group label {
+            font-weight: bold;
+            font-size: 16px;
+            color: #555;
+        }
+    
+        .form-control {
+            border: 1px solid #ddd;
+            border-radius: 11px;
+            padding: 8px;
+            font-size: 15px;
+            box-shadow: inset 0 1px 10px rgba(0, 86, 179, 0.2);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        }
+    
+        .form-control:focus {
+            box-shadow: 0 0 12px rgba(0, 86, 179, 0.3);
+            border-color: #003d80;
+            transform: scale(1.03);
+        }
+    
+        /* Botón de envío */
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            font-size: 18px;
+            transition: background-color 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+    
+        .submit-btn:hover {
+            background: linear-gradient(45deg, #555, #333);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+    
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -100%;
+            width: 200%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.15);
+            transform: rotate(45deg);
+            transition: all 0.5s ease-in-out;
+        }
+    
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+    
+        .invalid-feedback {
+            font-size: 13px;
+            color: #d9534f;
+            display: none;
+        }
+    
+        .is-invalid ~ .invalid-feedback {
+            display: block;
+        }
+    
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    
+        .is-invalid {
+            border-color: red;
+        }
+    
+        @media (max-width: 768px) {
+            .card {
+                padding: 25px;
+            }
+    
+            .card-header {
+                font-size: 24px;
+            }
+    
+            .submit-btn {
+                padding: 12px;
+                font-size: 16px;
+            }
+    
+            .form-section {
+                padding: 15px;
+            }
+        }
+
+        #errorModal .modal-header {
+    border-bottom: 2px solid #dc3545; /* Línea roja debajo de la cabecera */
+}
+
+#errorModal .modal-body {
+    font-size: 1.2rem; /* Tamaño de fuente más grande */
+    color: #6c757d; /* Color gris suave */
+}
+
+#errorModal .btn-close-white {
+    filter: brightness(0) invert(1); /* Asegura que el botón de cierre sea visible sobre fondo oscuro */
+}
+
+#errorModal .modal-footer button {
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+}
+
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                Registro
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{% url 'registro_becario' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- Campo Hidden: Nombre de la convocatoria -->
+                    <input type="hidden" name="convocatoria" value="{{ convocatoria.nombre }}" readonly>
+
+                    <!-- Sección 1: Datos Personales del Becario -->
+                    <div class="form-section">
+                        <h5>Datos Personales</h5>
+                        <div class="form-group input-icon">
+                            <label for="nombre"><i class="fas fa-user"></i> Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre"
+                                placeholder="Ingresa tu nombre" value="Juan" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="apellido_paterno"><i class="fas fa-user"></i> Apellido Paterno</label>
+                            <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno"
+                                placeholder="Ingresa tu apellido paterno" value="Pérez" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="apellido_materno"><i class="fas fa-user"></i> Apellido Materno</label>
+                            <input type="text" class="form-control" id="apellido_materno" name="apellido_materno"
+                                placeholder="Ingresa tu apellido materno" value="García" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="email"><i class="fas fa-envelope"></i> Correo Electrónico</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="ejemplo@correo.com" value="juan.perez@correo.com" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="contrasena"><i class="fas fa-lock"></i> Contraseña</label>
+                            <input type="password" class="form-control" id="contrasena" name="contrasena"
+                                placeholder="Ingresa tu contraseña" value="12345678" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="curp"><i class="fas fa-id-card"></i> CURP</label>
+                            <input type="text" class="form-control" id="curp" name="curp" placeholder="Ingresa tu CURP"
+                                value="PEGA800101HDFRJN00" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="rfc"><i class="fas fa-id-card-alt"></i> RFC</label>
+                            <input type="text" class="form-control" id="rfc" name="rfc" placeholder="Ingresa tu RFC"
+                                value="PEGA800101" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="nacionalidad"><i class="fas fa-flag"></i> Nacionalidad</label>
+                            <input type="text" class="form-control" id="nacionalidad" name="nacionalidad"
+                                placeholder="Ingresa tu nacionalidad" value="Mexicana" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="genero"><i class="fas fa-venus-mars"></i> Género</label>
+                            <input type="text" class="form-control" id="genero" name="genero"
+                                placeholder="Ingresa tu género" value="Masculino" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="fecha_nacimiento"><i class="fas fa-calendar-alt"></i> Fecha de
+                                Nacimiento</label>
+                            <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento"
+                                value="2000-01-01" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="telefono"><i class="fas fa-phone"></i> Teléfono de Contacto</label>
+                            <input type="tel" class="form-control" id="telefono" name="telefono"
+                                placeholder="Ingresa tu teléfono" value="5551234567" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="foto"><i class="fas fa-image"></i> Foto</label>
+                            <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
+                        </div>
+                    </div>
+
+                    <!-- Sección 2: Domicilio -->
+                    <div class="form-section">
+                        <h5>Domicilio</h5>
+                        <div class="form-group input-icon">
+                            <label for="pais"><i class="fas fa-globe"></i> País</label>
+                            <input type="text" class="form-control" id="pais" name="pais" placeholder="Ingresa tu país" value="México" required>
+                        </div>                        
+                        <div class="form-group input-icon">
+                            <label for="ciudad"><i class="fas fa-city"></i> Ciudad</label>
+                            <input type="text" class="form-control" id="ciudad" name="ciudad"
+                                placeholder="Ingresa tu ciudad" value="Ciudad de México" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="estado"><i class="fas fa-map"></i> Estado</label>
+                            <input type="text" class="form-control" id="estado" name="estado"
+                                placeholder="Ingresa tu estado" value="CDMX" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="codigo_postal"><i class="fas fa-code"></i> Código Postal</label>
+                            <input type="text" class="form-control" id="codigo_postal" name="codigo_postal"
+                                placeholder="Ingresa tu código postal" value="01000" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="direccion"><i class="fas fa-map-marker-alt"></i> Dirección</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion"
+                                placeholder="Ingresa tu dirección" value="Calle Falsa 123" required>
+                        </div>
+                    </div>
+
+                    <!-- Sección 3: Información Académica -->
+                    <div class="form-section">
+                        <h5>Información Académica</h5>
+                        <div class="form-group input-icon">
+                            <label for="institucion"><i class="fas fa-school"></i> Institución</label>
+                            <input type="text" class="form-control" id="institucion" name="institucion"
+                                placeholder="Ingresa tu institución" value="Universidad Nacional Autónoma de México"
+                                required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="carrera"><i class="fas fa-graduation-cap"></i> Carrera</label>
+                            <input type="text" class="form-control" id="carrera" name="carrera"
+                                placeholder="Ingresa tu carrera" value="Ingeniería en Sistemas Computacionales"
+                                required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="nivel_academico"><i class="fas fa-user-graduate"></i> Nivel Académico</label>
+                            <input type="text" class="form-control" id="nivel_academico" name="nivel_academico"
+                                placeholder="Ingresa tu nivel académico" value="Licenciatura" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="promedio"><i class="fas fa-calculator"></i> Promedio Académico</label>
+                            <input type="text" class="form-control" id="promedio" name="promedio"
+                                placeholder="Ingresa tu promedio" value="8.5" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="fecha_ingreso"><i class="fas fa-calendar-alt"></i> Fecha de Ingreso</label>
+                            <!-- Establecer el valor predeterminado al valor de la fecha actual -->
+                            <input type="date" class="form-control" id="fecha_ingreso" name="fecha_ingreso" value="2024-11-27" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <label for="fecha_egreso"><i class="fas fa-calendar-alt"></i> Fecha de Egreso</label>
+                            <!-- Establecer el valor predeterminado al valor de la fecha actual -->
+                            <input type="date" class="form-control" id="fecha_egreso" name="fecha_egreso" value="2024-11-27" required>
+                        </div>                        
+                    </div>
+
+                    <!-- Sección 4: Estudio Socioeconómico -->
+                    <div class="form-section">
+                        <h5>Estudio Socioeconómico</h5>
+                        <div class="form-group input-icon">
+                            <label for="ingreso_mensual"><i class="fas fa-money-bill-wave"></i> Ingreso Mensual</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="number" class="form-control" id="ingreso_mensual" name="ingreso_mensual"
+                                    placeholder="Ingresa el ingreso mensual" value="15000.00" step="0.01" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">MXN</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group input-icon">
+                            <label for="numero_dependientes"><i class="fas fa-users"></i> Número de Dependientes</label>
+                            <input type="number" class="form-control" id="numero_dependientes"
+                                name="numero_dependientes" placeholder="Ingresa el número de dependientes" value="3"
+                                required>
+                        </div>
+
+                        <div class="form-group input-icon">
+                            <label for="vivienda"><i class="fas fa-home"></i> Vivienda</label>
+                            <input type="text" class="form-control" id="vivienda" name="vivienda"
+                                placeholder="Describe el tipo de vivienda" value="Casa propia" required>
+                        </div>
+
+                        <div class="form-group input-icon">
+                            <label for="ocupacion_padres"><i class="fas fa-briefcase"></i> Ocupación de los
+                                Padres</label>
+                            <input type="text" class="form-control" id="ocupacion_padres" name="ocupacion_padres"
+                                placeholder="Ingresa la ocupación de los padres" value="Maestros" required>
+                        </div>
+
+                        <div class="form-group input-icon">
+                            <label for="nivel_educativo_padres"><i class="fas fa-graduation-cap"></i> Nivel Educativo de
+                                los Padres</label>
+                            <input type="text" class="form-control" id="nivel_educativo_padres"
+                                name="nivel_educativo_padres" placeholder="Ingresa el nivel educativo de los padres"
+                                value="Licenciatura" required>
+                        </div>
+
+                        <div class="form-group input-icon">
+                            <label for="comentarios"><i class="fas fa-comment"></i> Comentarios</label>
+                            <textarea class="form-control" id="comentarios" name="comentarios" rows="3"
+                                placeholder="Ingresa algún comentario adicional">Sin comentarios</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group input-icon">
+                        <input type="checkbox" id="terminos" name="terminos" required>
+                        <label for="terminos">He leído y acepto los <a href="{% url 'Terminos' %}" target="_blank">términos y condiciones</a>.</label>
+                        <div class="invalid-feedback">
+                            Debe aceptar los términos y condiciones para completar el registro.
+                        </div>
+                    </div>
+                    
+                    <!-- Botón de envío -->
+                    <button type="submit" class="submit-btn">Registrarse</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="emailExistenteModal" tabindex="-1" aria-labelledby="emailExistenteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="emailExistenteModalLabel">Correo ya registrado</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          El correo electrónico que ingresaste ya está registrado. Por favor, utiliza otro o intenta recuperar tu cuenta.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('registroForm').addEventListener('submit', async function (event) {
+        event.preventDefault(); // Prevenir el envío estándar del formulario
+    
+        const formData = new FormData(this); // Obtener datos del formulario
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+        try {
+            const response = await fetch(this.action, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: formData,
+            });
+    
+            const result = await response.json(); // Convertir respuesta a JSON
+    
+            if (!result.success) {
+                // Si el correo ya está registrado, muestra el modal
+                if (result.message === 'El correo electrónico ya está registrado.') {
+                    const modal = new bootstrap.Modal(document.getElementById('emailExistenteModal'));
+                    modal.show();
+                } else {
+                    alert(result.message || 'Ocurrió un error inesperado.');
+                }
+            } else {
+                // Si el registro fue exitoso, redirigir a otra página
+                window.location.href = result.redirect_url || '/';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Ocurrió un error. Intenta nuevamente más tarde.');
+        }
+    });
+    </script>
+  
+<script>
+document.getElementById('registroForm').addEventListener('submit', async function (event) {
+    event.preventDefault(); // Prevenir el envío predeterminado del formulario
+
+    const formData = new FormData(this);
+    const response = await fetch(this.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    });
+
+    const result = await response.json();
+
+    if (!result.success && result.message === 'El correo electrónico ya está registrado.') {
+        // Mostrar el modal
+        const modal = new bootstrap.Modal(document.getElementById('emailExistenteModal'));
+        modal.show();
+    } else if (result.success) {
+        // Redirigir si la operación fue exitosa
+        window.location.href = result.redirect_url;
+    } else {
+        alert('Ocurrió un error inesperado. Por favor, inténtalo nuevamente.');
+    }
+});
+
+    // Función para mostrar el modal de error con un mensaje personalizado
+    function showErrorModal(message) {
+        $('#errorModal .modal-body').text(message); // Actualizar el contenido del modal
+        $('#errorModal').modal('show'); // Mostrar el modal
+    }
+
+    // Manejar el envío del formulario
+    $('#registroForm').on('submit', function (e) {
+        e.preventDefault(); // Evitar recarga de página
+        const formData = new FormData(this); // Crear objeto FormData con los datos del formulario
+
+        $.ajax({
+            url: $(this).attr('action'), // URL proporcionada en el atributo 'action' del formulario
+            type: 'POST', // Método HTTP
+            data: formData, // Datos del formulario
+            contentType: false, // Deshabilitar la configuración automática de tipo de contenido
+            processData: false, // Evitar la serialización de datos
+            beforeSend: function () {
+                // Desactivar el botón de envío para evitar envíos múltiples
+                $('#registroForm button[type="submit"]').prop('disabled', true);
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message); // Mostrar un mensaje de éxito
+                    window.location.href = response.redirect_url || '/'; // Redirigir según la respuesta
+                } else {
+                    // Mostrar el modal de error con el mensaje recibido
+                    showErrorModal(response.message || 'Ha ocurrido un error desconocido.');
+                }
+            },
+            error: function () {
+                // Manejo de errores del servidor o red
+                showErrorModal('Error al enviar los datos. Por favor, inténtalo de nuevo.');
+            },
+            complete: function () {
+                // Rehabilitar el botón de envío después de completar la petición
+                $('#registroForm button[type="submit"]').prop('disabled', false);
+            },
+        });
+    });
+});
+
+</script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", (event) => {
+        let isValid = true;
+        let errors = [];
+
+        // Nombre
+        const nombre = document.getElementById("nombre").value.trim();
+        if (!nombre) {
+            isValid = false;
+            errors.push("El campo Nombre es obligatorio.");
+        }
+
+        // Apellido Paterno
+        const apellidoPaterno = document.getElementById("apellido_paterno").value.trim();
+        if (!apellidoPaterno) {
+            isValid = false;
+            errors.push("El campo Apellido Paterno es obligatorio.");
+        }
+
+        // Apellido Materno
+        const apellidoMaterno = document.getElementById("apellido_materno").value.trim();
+        if (!apellidoMaterno) {
+            isValid = false;
+            errors.push("El campo Apellido Materno es obligatorio.");
+        }
+
+        // Email
+        const email = document.getElementById("email").value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+            isValid = false;
+            errors.push("Ingresa un correo electrónico válido.");
+        }
+
+        // Contraseña
+        const contrasena = document.getElementById("contrasena").value.trim();
+        if (!contrasena || contrasena.length < 8) {
+            isValid = false;
+            errors.push("La contraseña debe tener al menos 8 caracteres.");
+        }
+
+        // CURP
+        const curp = document.getElementById("curp").value.trim();
+        const curpRegex = /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z\d]{2}$/;
+        if (!curp || !curpRegex.test(curp)) {
+            isValid = false;
+            errors.push("Ingresa un CURP válido.");
+        }
+
+        // RFC
+        const rfc = document.getElementById("rfc").value.trim();
+        const rfcRegex = /^[A-Z]{4}\d{6}$/;
+        if (!rfc || !rfcRegex.test(rfc)) {
+            isValid = false;
+            errors.push("Ingresa un RFC válido.");
+        }
+
+        // Nacionalidad
+        const nacionalidad = document.getElementById("nacionalidad").value.trim();
+        if (!nacionalidad) {
+            isValid = false;
+            errors.push("El campo Nacionalidad es obligatorio.");
+        }
+
+        // Género
+        const genero = document.getElementById("genero").value.trim();
+        if (!genero) {
+            isValid = false;
+            errors.push("El campo Género es obligatorio.");
+        }
+
+        // Fecha de nacimiento
+        const fechaNacimiento = document.getElementById("fecha_nacimiento").value;
+        if (!fechaNacimiento) {
+            isValid = false;
+            errors.push("El campo Fecha de Nacimiento es obligatorio.");
+        }
+
+        // Teléfono
+        const telefono = document.getElementById("telefono").value.trim();
+        const telefonoRegex = /^\d{10}$/;
+        if (!telefono || !telefonoRegex.test(telefono)) {
+            isValid = false;
+            errors.push("Ingresa un número de teléfono válido (10 dígitos).");
+        }
+
+        // Foto
+        const foto = document.getElementById("foto").files[0];
+        if (!foto) {
+            isValid = false;
+            errors.push("Debes subir una foto.");
+        }
+
+        // Si hay errores, prevenir el envío y mostrar alertas
+        if (!isValid) {
+            event.preventDefault();
+            alert(errors.join("\n"));
+        }
+    });
+});
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", (event) => {
+        let isValid = true;
+        let errors = [];
+
+        // Sección 1: Datos Personales
+        const nombre = document.getElementById("nombre").value.trim();
+        if (!nombre) {
+            isValid = false;
+            errors.push("El campo Nombre es obligatorio.");
+        }
+
+        const apellidoPaterno = document.getElementById("apellido_paterno").value.trim();
+        if (!apellidoPaterno) {
+            isValid = false;
+            errors.push("El campo Apellido Paterno es obligatorio.");
+        }
+
+        const apellidoMaterno = document.getElementById("apellido_materno").value.trim();
+        if (!apellidoMaterno) {
+            isValid = false;
+            errors.push("El campo Apellido Materno es obligatorio.");
+        }
+
+        const email = document.getElementById("email").value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+            isValid = false;
+            errors.push("Ingresa un correo electrónico válido.");
+        }
+
+        const contrasena = document.getElementById("contrasena").value.trim();
+        if (!contrasena || contrasena.length < 8) {
+            isValid = false;
+            errors.push("La contraseña debe tener al menos 8 caracteres.");
+        }
+
+        const curp = document.getElementById("curp").value.trim();
+        const curpRegex = /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z\d]{2}$/;
+        if (!curp || !curpRegex.test(curp)) {
+            isValid = false;
+            errors.push("Ingresa un CURP válido.");
+        }
+
+        const rfc = document.getElementById("rfc").value.trim();
+        const rfcRegex = /^[A-Z]{4}\d{6}$/;
+        if (!rfc || !rfcRegex.test(rfc)) {
+            isValid = false;
+            errors.push("Ingresa un RFC válido.");
+        }
+
+        const nacionalidad = document.getElementById("nacionalidad").value.trim();
+        if (!nacionalidad) {
+            isValid = false;
+            errors.push("El campo Nacionalidad es obligatorio.");
+        }
+
+        const genero = document.getElementById("genero").value.trim();
+        if (!genero) {
+            isValid = false;
+            errors.push("El campo Género es obligatorio.");
+        }
+
+        const fechaNacimiento = document.getElementById("fecha_nacimiento").value;
+        if (!fechaNacimiento) {
+            isValid = false;
+            errors.push("El campo Fecha de Nacimiento es obligatorio.");
+        }
+
+        const telefono = document.getElementById("telefono").value.trim();
+        const telefonoRegex = /^\d{10}$/;
+        if (!telefono || !telefonoRegex.test(telefono)) {
+            isValid = false;
+            errors.push("Ingresa un número de teléfono válido (10 dígitos).");
+        }
+
+        const foto = document.getElementById("foto").files[0];
+        if (!foto) {
+            isValid = false;
+            errors.push("Debes subir una foto.");
+        }
+
+        // Sección 2: Domicilio
+        const pais = document.getElementById("pais").value.trim();
+        if (!pais) {
+            isValid = false;
+            errors.push("El campo País es obligatorio.");
+        }
+
+        const ciudad = document.getElementById("ciudad").value.trim();
+        if (!ciudad) {
+            isValid = false;
+            errors.push("El campo Ciudad es obligatorio.");
+        }
+
+        const estado = document.getElementById("estado").value.trim();
+        if (!estado) {
+            isValid = false;
+            errors.push("El campo Estado es obligatorio.");
+        }
+
+        const codigoPostal = document.getElementById("codigo_postal").value.trim();
+        const codigoPostalRegex = /^\d{5}$/;
+        if (!codigoPostal || !codigoPostalRegex.test(codigoPostal)) {
+            isValid = false;
+            errors.push("Ingresa un Código Postal válido (5 dígitos).");
+        }
+
+        const direccion = document.getElementById("direccion").value.trim();
+        if (!direccion) {
+            isValid = false;
+            errors.push("El campo Dirección es obligatorio.");
+        }
+
+        // Si hay errores, prevenir el envío y mostrar alertas
+        if (!isValid) {
+            event.preventDefault();
+            alert(errors.join("\n"));
+        }
+    });
+});
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", (event) => {
+        let isValid = true;
+        let errors = [];
+
+        // Sección 1: Datos Personales
+        const nombre = document.getElementById("nombre").value.trim();
+        if (!nombre) {
+            isValid = false;
+            errors.push("El campo Nombre es obligatorio.");
+        }
+
+        const apellidoPaterno = document.getElementById("apellido_paterno").value.trim();
+        if (!apellidoPaterno) {
+            isValid = false;
+            errors.push("El campo Apellido Paterno es obligatorio.");
+        }
+
+        const apellidoMaterno = document.getElementById("apellido_materno").value.trim();
+        if (!apellidoMaterno) {
+            isValid = false;
+            errors.push("El campo Apellido Materno es obligatorio.");
+        }
+
+        const email = document.getElementById("email").value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+            isValid = false;
+            errors.push("Ingresa un correo electrónico válido.");
+        }
+
+        const contrasena = document.getElementById("contrasena").value.trim();
+        if (!contrasena || contrasena.length < 8) {
+            isValid = false;
+            errors.push("La contraseña debe tener al menos 8 caracteres.");
+        }
+
+        const curp = document.getElementById("curp").value.trim();
+        const curpRegex = /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z\d]{2}$/;
+        if (!curp || !curpRegex.test(curp)) {
+            isValid = false;
+            errors.push("Ingresa un CURP válido.");
+        }
+
+        const rfc = document.getElementById("rfc").value.trim();
+        const rfcRegex = /^[A-Z]{4}\d{6}$/;
+        if (!rfc || !rfcRegex.test(rfc)) {
+            isValid = false;
+            errors.push("Ingresa un RFC válido.");
+        }
+
+        const nacionalidad = document.getElementById("nacionalidad").value.trim();
+        if (!nacionalidad) {
+            isValid = false;
+            errors.push("El campo Nacionalidad es obligatorio.");
+        }
+
+        const genero = document.getElementById("genero").value.trim();
+        if (!genero) {
+            isValid = false;
+            errors.push("El campo Género es obligatorio.");
+        }
+
+        const fechaNacimiento = document.getElementById("fecha_nacimiento").value;
+        if (!fechaNacimiento) {
+            isValid = false;
+            errors.push("El campo Fecha de Nacimiento es obligatorio.");
+        }
+
+        const telefono = document.getElementById("telefono").value.trim();
+        const telefonoRegex = /^\d{10}$/;
+        if (!telefono || !telefonoRegex.test(telefono)) {
+            isValid = false;
+            errors.push("Ingresa un número de teléfono válido (10 dígitos).");
+        }
+
+        const foto = document.getElementById("foto").files[0];
+        if (!foto) {
+            isValid = false;
+            errors.push("Debes subir una foto.");
+        }
+
+        // Sección 2: Domicilio
+        const pais = document.getElementById("pais").value.trim();
+        if (!pais) {
+            isValid = false;
+            errors.push("El campo País es obligatorio.");
+        }
+
+        const ciudad = document.getElementById("ciudad").value.trim();
+        if (!ciudad) {
+            isValid = false;
+            errors.push("El campo Ciudad es obligatorio.");
+        }
+
+        const estado = document.getElementById("estado").value.trim();
+        if (!estado) {
+            isValid = false;
+            errors.push("El campo Estado es obligatorio.");
+        }
+
+        const codigoPostal = document.getElementById("codigo_postal").value.trim();
+        const codigoPostalRegex = /^\d{5}$/;
+        if (!codigoPostal || !codigoPostalRegex.test(codigoPostal)) {
+            isValid = false;
+            errors.push("Ingresa un Código Postal válido (5 dígitos).");
+        }
+
+        const direccion = document.getElementById("direccion").value.trim();
+        if (!direccion) {
+            isValid = false;
+            errors.push("El campo Dirección es obligatorio.");
+        }
+
+        // Sección 3: Información Académica
+        const institucion = document.getElementById("institucion").value.trim();
+        if (!institucion) {
+            isValid = false;
+            errors.push("El campo Institución es obligatorio.");
+        }
+
+        const carrera = document.getElementById("carrera").value.trim();
+        if (!carrera) {
+            isValid = false;
+            errors.push("El campo Carrera es obligatorio.");
+        }
+
+        const nivelAcademico = document.getElementById("nivel_academico").value.trim();
+        if (!nivelAcademico) {
+            isValid = false;
+            errors.push("El campo Nivel Académico es obligatorio.");
+        }
+
+        const promedio = document.getElementById("promedio").value.trim();
+        const promedioRegex = /^([0-9](\.\d{1,2})?|10(\.00?)?)$/;
+        if (!promedio || !promedioRegex.test(promedio)) {
+            isValid = false;
+            errors.push("Ingresa un promedio válido (entre 0 y 10).");
+        }
+
+        const fechaIngreso = document.getElementById("fecha_ingreso").value;
+        const fechaEgreso = document.getElementById("fecha_egreso").value;
+        if (!fechaIngreso) {
+            isValid = false;
+            errors.push("El campo Fecha de Ingreso es obligatorio.");
+        }
+        if (!fechaEgreso) {
+            isValid = false;
+            errors.push("El campo Fecha de Egreso es obligatorio.");
+        }
+        if (fechaIngreso && fechaEgreso && fechaIngreso > fechaEgreso) {
+            isValid = false;
+            errors.push("La Fecha de Egreso debe ser posterior a la Fecha de Ingreso.");
+        }
+
+        // Si hay errores, prevenir el envío y mostrar alertas
+        if (!isValid) {
+            event.preventDefault();
+            alert(errors.join("\n"));
+        }
+    });
+});
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", (event) => {
+        let isValid = true;
+        let errors = [];
+
+        // Validaciones previas: Sección 1, 2, 3 (ya incluidas previamente)...
+
+        // Sección 4: Estudio Socioeconómico
+        const ingresoMensual = document.getElementById("ingreso_mensual").value.trim();
+        if (!ingresoMensual || isNaN(ingresoMensual) || ingresoMensual <= 0) {
+            isValid = false;
+            errors.push("El ingreso mensual debe ser un número mayor a 0.");
+        }
+
+        const numeroDependientes = document.getElementById("numero_dependientes").value.trim();
+        if (!numeroDependientes || isNaN(numeroDependientes) || numeroDependientes < 0) {
+            isValid = false;
+            errors.push("El número de dependientes debe ser un número igual o mayor a 0.");
+        }
+
+        const vivienda = document.getElementById("vivienda").value.trim();
+        if (!vivienda) {
+            isValid = false;
+            errors.push("El campo Vivienda es obligatorio.");
+        }
+
+        const ocupacionPadres = document.getElementById("ocupacion_padres").value.trim();
+        if (!ocupacionPadres) {
+            isValid = false;
+            errors.push("El campo Ocupación de los Padres es obligatorio.");
+        }
+
+        const nivelEducativoPadres = document.getElementById("nivel_educativo_padres").value.trim();
+        if (!nivelEducativoPadres) {
+            isValid = false;
+            errors.push("El campo Nivel Educativo de los Padres es obligatorio.");
+        }
+
+        const comentarios = document.getElementById("comentarios").value.trim();
+        if (comentarios.length > 500) {
+            isValid = false;
+            errors.push("El campo Comentarios no puede exceder los 500 caracteres.");
+        }
+
+        // Si hay errores, prevenir el envío y mostrar alertas
+        if (!isValid) {
+            event.preventDefault();
+            alert(errors.join("\n"));
+        }
+    });
+});
+</script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

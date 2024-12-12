@@ -1,0 +1,86 @@
+{% extends 'Blog/blog.html' %}
+{% load static %}
+{% block title %}
+    Sección 9
+{% endblock %}
+
+{% block content %}
+<!-- Contenedor principal con cuadro de fondo más ancho -->
+<div class="article-container" style="max-width: 1200px; margin: 50px auto; padding: 40px; background: #ffffff; border-radius: 25px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); font-family: 'Arial', sans-serif;">
+
+    <!--Hero-->
+    <div class="hero-section" style="position: relative; height: 400px; background-color: #333; border-radius: 20px; overflow: hidden;">
+        <!-- Imagen de fondo -->
+        <img src="{% static 'images/ss1.jpg' %}" alt="Imagen Educativa" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(50%); border-radius: 20px;">
+    
+    <!-- Contenido principal con texto -->
+        <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; text-align: center; font-size: 36px; font-weight: bold;">
+            <h1>El Impacto de las Comunidades en el Acceso a Oportunidades de Becas</h1>
+            <p style="font-size: 20px; font-weight: normal;">Cómo las redes comunitarias pueden facilitar el acceso a becas y programas educativos</p>
+        </div>
+    </div>
+    
+    <!-- Contenido principal con texto -->
+    <div class="article-text" style="text-align: justify; line-height: 1.8; font-size: 20px; color: #333333; margin-top: 30px;">
+        <h2 style="font-size: 32px; font-weight: bold; color: #2967b9; text-transform: uppercase; margin-bottom: 25px;">La Difusión de Información Sobre Becas</h2>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Las comunidades, tanto físicas como en línea, suelen ser un medio de difusión de información sobre becas y ayudas económicas. Las organizaciones comunitarias, bibliotecas, centros de tutoría y asociaciones de padres suelen organizar eventos informativos y charlas sobre cómo aplicar a becas y cómo maximizar tus posibilidades de éxito.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Las redes en línea, como foros y grupos en redes sociales, también son valiosas para compartir experiencias y consejos sobre aplicaciones a becas. Participar en estos espacios te permite estar al tanto de las últimas convocatorias y compartir recursos útiles con otros estudiantes.
+        </p>
+        
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Uno de los mayores desafíos al aplicar a becas es entender los requisitos y completar correctamente los formularios de aplicación. Las comunidades pueden ofrecer apoyo en forma de talleres, asesorías personalizadas y revisiones de solicitudes. Esto es especialmente importante para los estudiantes de primera generación o aquellos que no tienen acceso a asesoría profesional.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            El proceso de solicitud de becas puede ser estresante y competitivo. Tener una comunidad de apoyo puede marcar la diferencia en mantener la motivación y superar los desafíos. Las comunidades proporcionan un entorno donde los estudiantes pueden compartir sus experiencias, celebrar sus éxitos y aprender de sus fracasos, fomentando una cultura de colaboración y resiliencia.
+        </p>
+        
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Muchas veces, el éxito de otros miembros de la comunidad sirve de inspiración y motivación. Los testimonios de estudiantes que han recibido becas gracias al apoyo comunitario pueden animar a otros a seguir sus pasos y aprovechar las oportunidades disponibles. Estos ejemplos de éxito también pueden proporcionar consejos prácticos sobre cómo abordar el proceso de solicitud de manera efectiva.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            El papel de las comunidades en el acceso a oportunidades de becas es fundamental. Desde la difusión de información hasta el apoyo emocional y la asistencia en la aplicación, las comunidades brindan un entorno que facilita el acceso a la educación superior. Participar activamente en una comunidad y aprovechar los recursos disponibles puede hacer la diferencia entre solo soñar con una beca y realmente obtenerla.
+        </p>
+    </div>                 
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #cce7ff, #f6f9fc);
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .article-container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 30px auto;
+        max-width: 80%;
+    }
+
+    .hero-section {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .hero-section h2 {
+        color: #004080;
+        font-weight: bold;
+        text-shadow: 1px 1px 5px rgba(0, 64, 128, 0.3);
+    }
+
+    .overlay {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 15px;
+    }
+</style>
+
+
+{% endblock %}

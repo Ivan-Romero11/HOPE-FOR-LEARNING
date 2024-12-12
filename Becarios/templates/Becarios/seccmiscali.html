@@ -1,0 +1,143 @@
+{% extends 'Becarios/base.html' %}
+{% load static %}
+
+{% block title %}
+    Página Principal
+{% endblock %}
+
+{% block content %}
+<style>
+  /* Contenedor principal */
+  .content {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Sección de bienvenida */
+  .welcome {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    gap: 20px;
+  }
+
+  .welcome img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    border: 4px solid white;
+  }
+
+  .welcome .text {
+    color: #2c3e50;
+  }
+
+  .welcome .text p {
+    margin: 5px 0;
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+
+  .welcome .text p.secondary {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #34495e;
+  }
+
+  /* Notificación */
+  .notification {
+    background-color: #fef5e7;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+    color: #a67c00;
+  }
+
+  .notification i {
+    font-size: 2rem;
+    margin-right: 10px;
+    color: #ffbf00;
+  }
+
+  /* Estatus general */
+  .status {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .status .card {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+  }
+
+  .status .card:hover {
+    transform: scale(1.05);
+  }
+
+  .status h3 {
+    margin: 0 0 10px;
+    font-size: 1.5rem;
+    color: #2c3e50;
+  }
+
+  .status p {
+    font-size: 1rem;
+    color: #7f8c8d;
+    margin: 10px 0;
+  }
+
+  .status p span {
+    font-weight: bold;
+    color: #2c3e50;
+  }
+
+  .status .active {
+    color: #27ae60;
+  }
+</style>
+
+<div class="content">
+  <!-- Sección de bienvenida -->
+  <div class="welcome">
+    <img src="{{ usuario.foto.url }}" alt="Avatar de {{ usuario.nombre }}">
+    <div class="text">
+      <p>¡Hola {{ usuario.nombre|upper }} {{ usuario.apellido_paterno|upper }}!</p>
+      <p class="secondary">3er semestre de universidad</p>
+    </div>
+  </div>
+
+  <!-- Notificación -->
+  <div class="notification">
+    <i class="fas fa-bell"></i>
+    <p>¡Bienvenid@ a tu plataforma! Estamos aquí para apoyarte.</p>
+  </div>
+
+  <!-- Estatus general -->
+  <div class="status">
+    <div class="card">
+      <h3>Información Académica</h3>
+      <p><span>Promedio General:</span> {{ info_academica.promedio }}</p>
+      <p><span>Convenio/Alianza:</span> Fundación Hope For Learning</p>
+    </div>
+    <div class="card">
+      <h3>Estatus del Programa</h3>
+      <p><span>Estatus:</span> <span class="active">Seleccionado</span></p>
+      <p><span>Grado Escolar:</span> {{ info_academica.semestre }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

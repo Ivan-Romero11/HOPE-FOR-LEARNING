@@ -1,0 +1,93 @@
+{% extends 'Blog/blog.html' %}
+{% load static %}
+{% block title %}
+    Sección 6
+{% endblock %}
+
+{% block content %}
+<!-- Contenedor principal con cuadro de fondo más ancho -->
+<div class="article-container" style="max-width: 1200px; margin: 50px auto; padding: 40px; background: #ffffff; border-radius: 25px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); font-family: 'Arial', sans-serif;">
+
+   <!--Hero-->
+   <div class="hero-section" style="position: relative; height: 400px; background-color: #333; border-radius: 20px; overflow: hidden;">
+    <!-- Imagen de fondo -->
+    <img src="{% static 'images/s7.jpg' %}" alt="Imagen Educativa" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(50%); border-radius: 20px;">
+    
+    <!-- Contenido principal con texto -->
+        <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; text-align: center; font-size: 36px; font-weight: bold;">
+            <h1>Cómo Empezar en el Voluntariado: Consejos para Nuevos Voluntarios</h1>
+            <p style="font-size: 20px; font-weight: normal;">Guía práctica para iniciarte en el mundo del voluntariado</p>
+        </div>
+    </div>
+    
+    <!-- Contenido principal con texto -->
+    <div class="article-text" style="text-align: justify; line-height: 1.8; font-size: 20px; color: #333333; margin-top: 30px;">
+        <h2 style="font-size: 32px; font-weight: bold; color: #2967b9; text-transform: uppercase; margin-bottom: 25px;">Tu camino en el Voluntariado</h2>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Si nunca has sido voluntario, puede que no sepas por dónde comenzar. El voluntariado es una excelente manera de contribuir a tu comunidad, adquirir experiencia profesional y desarrollar nuevas habilidades. Sin embargo, el primer paso puede parecer desafiante. En este artículo, te damos algunos consejos prácticos sobre cómo comenzar en el voluntariado y cómo encontrar la oportunidad perfecta para ti.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Antes de empezar, es importante pensar en qué áreas te interesan más. ¿Te gustaría trabajar con niños, personas mayores, el medio ambiente o en una causa social específica? Identificar tus intereses te ayudará a encontrar un programa de voluntariado que se alinee con tus pasiones.
+        </p>
+       
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Además, reflexiona sobre las habilidades que ya tienes o aquellas que te gustaría desarrollar. El voluntariado puede ser una excelente manera de poner en práctica tus habilidades existentes, como la organización de eventos o la comunicación, o de aprender algo nuevo, como la gestión de proyectos o el trabajo con herramientas tecnológicas.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Una vez que tengas claro lo que te gustaría hacer, es hora de investigar las oportunidades disponibles. Muchas organizaciones locales, instituciones educativas y plataformas en línea ofrecen programas de voluntariado. Asegúrate de revisar las páginas web de organizaciones sin fines de lucro, universidades, empresas y fundaciones que trabajen en áreas que te interesen.
+        </p>
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Si estás buscando una oportunidad relacionada con tu carrera profesional, busca programas de voluntariado en sectores específicos como la salud, la tecnología, la educación o el desarrollo comunitario. Recuerda que algunas becas también están disponibles para voluntarios, por lo que es útil estar al tanto de las becas que ofrecen apoyo a quienes trabajan en causas sociales.
+        </p>
+       
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            El voluntariado requiere tiempo y compromiso. Aunque es una experiencia gratificante, es importante ser consciente de que tendrás que dedicar una cantidad de horas a la semana para cumplir con tus responsabilidades. Antes de comprometerte con un programa de voluntariado, asegúrate de que puedes cumplir con las expectativas y tareas asignadas.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            El voluntariado es una oportunidad para aprender y crecer. Aprovecha cada oportunidad para adquirir nuevas habilidades, interactuar con personas de diferentes contextos y asumir roles de liderazgo cuando sea posible. Si alguna vez te sientes inseguro o tienes dudas, no dudes en pedir orientación o retroalimentación. Al final, lo que más importa es la experiencia que adquieras.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Comenzar en el voluntariado es una experiencia enriquecedora que ofrece una amplia variedad de beneficios. Desde el desarrollo de nuevas habilidades hasta la creación de relaciones significativas y la contribución a causas valiosas, el voluntariado es una forma excelente de dar un paso positivo en tu vida personal y profesional. Con los consejos y pasos adecuados, puedes encontrar una oportunidad que se ajuste a tus intereses y comenzar a hacer una diferencia.
+        </p>
+    </div>            
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #cce7ff, #f6f9fc);
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .article-container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 30px auto;
+        max-width: 80%;
+    }
+
+    .hero-section {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .hero-section h2 {
+        color: #004080;
+        font-weight: bold;
+        text-shadow: 1px 1px 5px rgba(0, 64, 128, 0.3);
+    }
+
+    .overlay {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 15px;
+    }
+</style>
+
+
+{% endblock %}

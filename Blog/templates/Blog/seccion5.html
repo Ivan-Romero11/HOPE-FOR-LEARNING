@@ -1,0 +1,98 @@
+{% extends 'Blog/blog.html' %}
+{% load static %}
+{% block title %}
+    Sección 5
+{% endblock %}
+
+{% block content %}
+<!-- Contenedor principal con cuadro de fondo más ancho -->
+<div class="article-container" style="max-width: 1200px; margin: 50px auto; padding: 40px; background: #ffffff; border-radius: 25px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); font-family: 'Arial', sans-serif;">
+
+    <!--Hero-->
+    <div class="hero-section" style="position: relative; height: 400px; background-color: #333; border-radius: 20px; overflow: hidden;">
+        <!-- Imagen de fondo -->
+        <img src="{% static 'images/s6.jpg' %}" alt="Imagen Educativa" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(50%); border-radius: 20px;">
+    
+    <!-- Contenido principal con texto -->
+        <div class="text-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; text-align: center; font-size: 36px; font-weight: bold;">
+            <h1>Beneficios de Participar en Programas de Voluntariado</h1>
+            <p style="font-size: 20px; font-weight: normal;">Explorando cómo el voluntariado impulsa tu crecimiento personal y profesional</p>
+        </div>
+    </div>
+    
+    <!-- Contenido principal con texto -->
+    <div class="article-text" style="text-align: justify; line-height: 1.8; font-size: 20px; color: #333333; margin-top: 30px;">
+        <h2 style="font-size: 32px; font-weight: bold; color: #2967b9; text-transform: uppercase; margin-bottom: 25px;">El impacto transformador del voluntariado</h2>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Participar en programas de voluntariado no solo beneficia a las comunidades a las que se sirve, sino que también ofrece una amplia gama de beneficios para los voluntarios. Desde el desarrollo de habilidades profesionales hasta el enriquecimiento personal, el voluntariado es una experiencia transformadora. Este artículo explora los beneficios más destacados de participar en programas de voluntariado, demostrando cómo estas actividades pueden ser un paso clave en tu desarrollo.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            El voluntariado te permite aprender nuevas habilidades que pueden ser de gran ayuda en tu vida profesional. A través de las diversas tareas que realizas, como la organización de eventos, la gestión de recursos, la comunicación con personas de diferentes sectores y el trabajo en equipo, puedes mejorar tus capacidades en áreas como el liderazgo, la toma de decisiones y la resolución de problemas.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Además, los voluntarios a menudo tienen la oportunidad de trabajar en proyectos específicos que les permiten adquirir habilidades técnicas relacionadas con la informática, el diseño, la educación, la salud, entre otras áreas. Estas habilidades son altamente valoradas en el mercado laboral y pueden ser un diferenciador al buscar empleo.
+        </p>
+        
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            El voluntariado es una experiencia profundamente gratificante que puede mejorar tu bienestar emocional. Ayudar a los demás te permite sentirte más conectado con tu comunidad y con el mundo que te rodea. La sensación de haber hecho una diferencia positiva en la vida de alguien puede generar una profunda satisfacción y aumentar tu autoestima.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Además, el voluntariado te permite conocer personas con intereses similares, lo que puede expandir tu red social y fomentar la creación de relaciones significativas. Esta interacción social contribuye a tu crecimiento personal y te ayuda a adquirir una perspectiva más amplia sobre el mundo.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            El voluntariado también tiene un impacto positivo en tus perspectivas profesionales. Muchas empresas valoran el trabajo voluntario como una forma de demostrar compromiso social, liderazgo y la capacidad para trabajar en equipo. Además, algunas organizaciones incluso ofrecen oportunidades de empleo a aquellos voluntarios que han demostrado ser efectivos en sus roles.
+        </p>
+       
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            La experiencia de voluntariado también te permite establecer contactos profesionales dentro de tu campo de interés, lo que puede abrir puertas a nuevas oportunidades de empleo. Si estás interesado en áreas como la educación, la salud, el medio ambiente o el desarrollo social, el voluntariado te proporciona una vía para adquirir experiencia en el campo y fortalecer tu currículum.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            Algunas organizaciones ofrecen becas específicas para estudiantes que se dedican al voluntariado. Estas becas pueden estar dirigidas a estudiantes de universidades o colegios, con el fin de reconocer su esfuerzo por mejorar la sociedad mientras continúan sus estudios. Investigar y postularse a estas becas es una excelente manera de aprovechar el voluntariado para obtener apoyo financiero para tu educación.
+        </p>
+    
+        <p style="margin-bottom: 20px; font-size: 20px; color: #34495e; line-height: 1.7;">
+            El voluntariado no solo es una forma de ayudar a los demás, sino también una excelente oportunidad para tu desarrollo personal y profesional. Al adquirir nuevas habilidades, mejorar tu bienestar emocional y expandir tus redes sociales y profesionales, puedes aprovechar al máximo esta experiencia. Participar en programas de voluntariado no solo beneficia a la comunidad, sino que también te prepara para un futuro lleno de oportunidades.
+        </p>
+    </div>          
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #cce7ff, #f6f9fc);
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .article-container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 30px auto;
+        max-width: 80%;
+    }
+
+    .hero-section {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .hero-section h2 {
+        color: #004080;
+        font-weight: bold;
+        text-shadow: 1px 1px 5px rgba(0, 64, 128, 0.3);
+    }
+
+    .overlay {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 15px;
+    }
+</style>
+
+
+{% endblock %}
