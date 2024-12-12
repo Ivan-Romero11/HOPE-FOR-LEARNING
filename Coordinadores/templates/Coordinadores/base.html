@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"
+		crossorigin="anonymous"></script>
+
+
+	<!-- My CSS -->
+	{% load static %}
+	<link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+	<title>{% block title %} Becarios Seleccionados {% endblock %}</title>
+</head>
+
+<body>
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+			<i class='bx bxs-smile'></i>
+			<span class="text">HOPE FOR LEARNING</span>
+		</a>
+		<ul class="side-menu top">
+			<!-- Dashboard Link -->
+			<li class="{% if request.path == '/Coordinadores/Dashboard/' %}active{% endif %}">
+				<a href="{% url 'dashboard' %}">
+					<i class='bx bxs-dashboard'></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<br>
+
+
+			<!-- Validacion_documentos Link -->
+			<li class="{% if request.resolver_match.url_name == 'validar_documentos' %}active{% endif %}">
+				<a href="{% url 'validar_documentos' %}">
+					<i class='bx bxs-file-doc'></i>
+					<!-- Cambié el ícono a 'bxs-folder-open' para evitar duplicados -->
+					<span class="text">Documentacion</span>
+				</a>
+			</li>
+			<br>
+
+			<!-- Voluntarios Dropdown Menu -->
+			<li class="nav-item dropdown {% if 'voluntarios' in request.path %}active{% endif %}">
+				<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+					aria-expanded="false">
+					<i class='bx bxs-user'></i>
+					<span class="text">Voluntarios</span>
+				</a>
+				<ul class="dropdown-menu submenu">
+					<li><a class="dropdown-item" href="{% url 'voluntarios' %}">Lista de Voluntarios</a></li>
+					<li><a class="dropdown-item" href="{% url 'voluntarios_aceptados' %}">Voluntarios Aceptados</a></li>
+					<li><a class="dropdown-item" href="{% url 'voluntarios_rechazados' %}">Voluntarios Rechazados</a></li>
+				</ul>
+			</li>
+			<br>
+
+			<!-- Becarios Dropdown Menu -->
+			<li
+				class="nav-item dropdown {% if 'Coordinadores/Aceptados' in request.path or 'Coordinadores/Rechazados' in request.path %}active{% endif %}">
+				<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+					aria-expanded="false">
+					<i class='bx bxs-graduation'></i>
+					<span class="text">Becarios</span>
+				</a>
+				<ul class="dropdown-menu submenu">
+					<li><a class="dropdown-item" href="{% url 'lista_becarios' %}">En revisión</a></li>
+					<li><a class="dropdown-item" href="{% url 'lista_becariosacep' %}">Aceptados</a></li>
+					<li><a class="dropdown-item" href="{% url 'lista_becariosrecha' %}">Rechazados</a></li>
+				</ul>
+			</li>
+			<br>
+			<!-- Logout Link -->
+			<li class="side-menu">
+				<a href="{% url 'cerrar_sesion' %}" class="logout">
+					<i class='bx bxs-log-out-circle'></i>
+					<span class="text">Cerrar Sesión</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu'></i>
+			<a href="#" class="nav-link ">Coordinadores</a>
+
+			<!-- Contenedor del perfil del coordinador activo -->
+			<div class="user-profile">
+				<img src="{{ coordinador.usuario.foto.url }}" 
+					 alt="Foto de {{ coordinador.usuario.nombre }}" 
+					 class="profile-picture">
+				<span class="user-name">{{ coordinador.usuario.nombre }} {{ coordinador.usuario.apellido_paterno }}</span>
+			</div>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+			{% block content %}
+			<!-- El contenido de las demás páginas, irá aquí -->
+			{% endblock %}
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
+
+
+	<script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>

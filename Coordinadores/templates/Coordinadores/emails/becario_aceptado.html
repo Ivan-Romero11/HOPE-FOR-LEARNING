@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aceptación de Beca - Hope for Learning</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #2e8b57;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .content {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .content p {
+            line-height: 1.6;
+        }
+        .content .highlight {
+            font-weight: bold;
+            color: #2e8b57;
+        }
+        .motivo {
+            background-color: #d4edda;
+            border-left: 5px solid #2e8b57;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-weight: normal; /* Aquí eliminamos la cursiva */
+        }        
+        .convocatoria {
+            background-color: #d4edda;
+            border-left: 5px solid #2e8b57;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+            margin-top: 30px;
+        }
+        .footer a {
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>¡Felicidades, {{ becario.usuario.nombre }}!</h1>
+        </div>
+        <div class="content">
+            <p>Te informamos que has sido aceptado en el programa de becas de Hope for Learning. ¡Felicitaciones por tu esfuerzo y dedicación!</p>
+
+            
+            <!-- Mostrar el motivo destacado si existe -->
+            {% if motivo %}
+                <div class="motivo">
+                    <p><strong>Motivo de tu aceptación:</strong> {{ motivo }}</p>
+                </div>
+            {% endif %}
+
+            <div class="convocatoria">
+                <p><strong>Convocatoria:</strong> {{ convocatoria.nombre }}</p>
+                <p><strong>Descripción:</strong> {{ convocatoria.comentario }}</p>
+            </div>
+            <p class="highlight">Ahora formas parte del grupo de becarios que recibirán el apoyo para continuar con tus estudios.</p>
+            <p>En breve recibirás más detalles sobre los siguientes pasos y la asignación de tu beca. Si tienes alguna duda o pregunta, por favor no dudes en ponerte en contacto con nosotros.</p>
+        </div>
+        <div class="footer">
+            <p>Este es un mensaje automático, por favor no respondas a este correo.</p>
+        </div>
+    </div>
+</body>
+</html>

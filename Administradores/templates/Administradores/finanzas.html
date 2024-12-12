@@ -1,0 +1,180 @@
+{% extends 'Administradores/base.html' %}
+
+{% block title %}Dashboard de Financiación{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Contenedor principal */
+    .container {
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Título */
+    h2.text-center {
+        font-family: 'Arial', sans-serif;
+        color: #003366;
+        font-weight: bold;
+    }
+
+    /* Estilos de la tabla */
+    .table {
+        border-collapse: separate;
+        border-spacing: 0 8px;
+        background-color: #ffffff;
+    }
+    .table thead th {
+        background-color: #002244;
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 1rem;
+        text-align: center;
+        border: none;
+    }
+    .table tbody td {
+        background-color: #e6f2ff;
+        color: #333333;
+        font-weight: 500;
+        text-align: center;
+        vertical-align: middle;
+        border-top: 2px solid #cccccc;
+    }
+    .table tbody tr:hover td {
+        background-color: #b3d9ff;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Iconos */
+    .table thead th i {
+        margin-right: 5px;
+    }
+
+    /* Responsabilidad de nombre */
+    .table tbody td:last-child {
+        font-style: italic;
+        font-weight: 600;
+        color: #002244;
+    }
+
+    /* Gráficos */
+    #gastosChart, #saldosChart {
+        background-color: #ffffff;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Gráficos: personalización de etiquetas */
+    .chartjs-render-monitor {
+        font-family: 'Arial', sans-serif;
+        color: #333;
+    }
+</style>
+
+<div class="container">
+    <h2 class="text-center">Informe de Gastos y Transparencia</h2><br><br>
+
+    <div class="row">
+        <!-- Gráfica de Gastos por Categoría -->
+        <div class="col-md-6">
+            <canvas id="gastosChart" style="height: 400px;"></canvas>
+        </div>
+
+        <!-- Gráfica de Saldos por Fecha -->
+        <div class="col-md-6">
+            <canvas id="saldosChart" style="height: 400px;"></canvas>
+        </div>
+    </div>
+
+    <!-- Tabla con información adicional -->
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <table class="table table-bordered text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th><i class="fas fa-donate"></i> Total Donaciones</th>
+                        <th><i class="fas fa-coins"></i> Total Gastos</th>
+                        <th><i class="fas fa-user-tie"></i> Responsable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if ultimo_informe %}
+                    <tr>
+                        <td>${{ ultimo_informe.total_donaciones }}</td>
+                        <td>${{ ultimo_informe.total_gastos }}</td>
+                        <td>{{ ultimo_informe.responsable.nombre }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3">No hay datos disponibles</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Incluir la librería de Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Incluir la librería de Font Awesome para los iconos -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<script>
+    // Gráfico de Gastos por Categoría
+    var ctxGastos = document.getElementById('gastosChart').getContext('2d');
+    var gastosChart = new Chart(ctxGastos, {
+        type: 'bar',
+        data: {
+            labels: {{ categorias|safe }},
+            datasets: [{
+                label: 'Monto en Gastos',
+                data: {{ montos|safe }},
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // Gráfico de Saldos por Fecha
+    var ctxSaldos = document.getElementById('saldosChart').getContext('2d');
+    var saldosChart = new Chart(ctxSaldos, {
+        type: 'line',
+        data: {
+            labels: {{ fechas|safe }},
+            datasets: [{
+                label: 'Saldo Final',
+                data: {{ saldos|safe }},
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+</script>
+
+{% endblock %}

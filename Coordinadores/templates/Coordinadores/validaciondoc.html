@@ -1,0 +1,282 @@
+{% extends 'Coordinadores/base.html' %}
+
+{% block title %}Validación de Documentos{% endblock %}
+
+{% block content %}
+<style>
+    /* Contenedor de la tabla */
+    .table-container {
+        margin: 20px auto;
+        padding: 15px;
+        max-width: 100%;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #f7f8fc, #d9e4f5);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    /* Título de la sección */
+    .table-container h2 {
+        text-align: center;
+        font-size: 24px;
+        color: #0048ff;
+        margin-bottom: 20px;
+        font-family: 'Arial', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: bold;
+    }
+
+    /* Tabla futurista */
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: 'Arial', sans-serif;
+        color: #4a4a4a;
+        background: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    /* Encabezado */
+    .styled-table thead tr {
+        background: linear-gradient(135deg, #d1e8ff, #eaf3ff);
+        text-align: left;
+    }
+
+    .styled-table th {
+        padding: 15px;
+        text-align: center;
+        font-size: 16px;
+        text-transform: uppercase;
+        color: #6b778c;
+        border-bottom: 1px solid #e1e8f0;
+    }
+
+    /* Cuerpo */
+    .styled-table td {
+        padding: 12px 15px;
+        text-align: center;
+        font-size: 14px;
+        border-bottom: 1px solid #f1f3f6;
+        transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Filas al pasar el cursor */
+    .styled-table tbody tr:hover {
+        background: #f7fafc;
+        color: #4a90e2;
+    }
+
+    /* Última fila sin borde */
+    .styled-table tbody tr:last-of-type td {
+        border-bottom: none;
+    }
+
+    /* Botones futuristas */
+    .icon-btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        margin: 0 5px;
+        border-radius: 50%;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        background: #f0f4f8;
+        color: #6b778c;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .icon-btn:hover {
+        background: #fffae6;
+        color: #4a4a4a;
+        transform: scale(1.1);
+    }
+
+    .icon-btn i {
+        font-size: 16px;
+    }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+        .styled-table thead {
+            display: none;
+        }
+
+        .styled-table tbody tr {
+            display: block;
+            margin-bottom: 10px;
+            background: #f7f9fc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .styled-table tbody td {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #e1e8f0;
+        }
+
+        .styled-table tbody td:last-of-type {
+            border-bottom: none;
+        }
+
+        .styled-table tbody td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            color: #6b778c;
+            text-transform: uppercase;
+        }
+    }
+</style>
+
+<div class="table-container">
+    <h2>Validación de Documentos</h2>
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Becario</th>
+                <th>Grado de Estudio</th>
+                <th>Promedio General</th>
+                <th>Promedio Semestre</th>
+                <th>Constancia</th>
+                <th>Boleta</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for documento in documentos_pendientes %}
+            <tr>
+                <td>{{ documento.becario.usuario.nombre }}</td>
+                <td>{{ documento.becario.informacionacademica.grado }}</td>
+                <td>{{ documento.promedio_general }}</td>
+                <td>{{ documento.promedio_semestre }}</td>
+                <!-- Constancia -->
+                <td>
+                    {% if documento.constancia %}
+                    <div class="icon-container">
+                        <!-- Botón para ver la constancia -->
+                        <a href="{{ documento.constancia.url }}" target="_blank" title="Ver Constancia" class="icon-btn view-icon">
+                            <i class="fa fa-eye fa-lg"></i>
+                        </a>
+                        <!-- Botón para descargar la constancia -->
+                        <a href="{{ documento.constancia.url }}" download title="Descargar Constancia" class="icon-btn download-icon">
+                            <i class="fa fa-download fa-lg"></i>
+                        </a>
+                        <!-- Mostrar ícono dependiendo del estatus -->
+                        {% if documento.estatus == 'Aceptado' %}
+                        <i class="fa fa-check-circle fa-lg text-success" title="Aceptado"></i>
+                        {% elif documento.estatus == 'Rechazado' %}
+                        <i class="fa fa-times-circle fa-lg text-danger" title="Rechazado"></i>
+                        {% else %}
+                        <!-- Mostrar botones si no hay estatus definido -->
+                        <button class="icon-btn approve-icon" data-documento-id="{{ documento.becario.id }}"
+                            data-tipo-documento="Constancia" data-accion="Aceptar" onclick="openModal(this)">
+                            <i class="fa fa-check-circle fa-lg"></i>
+                        </button>
+                        <button class="icon-btn reject-icon" data-documento-id="{{ documento.becario.id }}"
+                            data-tipo-documento="Constancia" data-accion="Rechazar" onclick="openModal(this)">
+                            <i class="fa fa-times-circle fa-lg"></i>
+                        </button>
+                        {% endif %}
+                    </div>
+                    {% else %}
+                    <span class="text-muted">No disponible</span>
+                    {% endif %}
+                </td>
+                <!-- Boleta -->
+                <td>
+                    {% if documento.boleta %}
+                    <div class="icon-container">
+                        <a href="{{ documento.boleta.url }}" target="_blank" title="Ver Boleta" class="icon-btn view-icon">
+                            <i class="fa fa-eye fa-lg"></i>
+                        </a>
+                        <a href="{{ documento.boleta.url }}" download title="Descargar Boleta" class="icon-btn download-icon">
+                            <i class="fa fa-download fa-lg"></i>
+                        </a>
+                        <!-- Mostrar ícono dependiendo del estatus -->
+                        {% if documento.estatus == 'Aceptado' %}
+                        <i class="fa fa-check-circle fa-lg text-success" title="Aceptado"></i>
+                        {% elif documento.estatus == 'Rechazado' %}
+                        <i class="fa fa-times-circle fa-lg text-danger" title="Rechazado"></i>
+                        {% else %}
+                        <!-- Mostrar botones si no hay estatus definido -->
+                        <button class="icon-btn approve-icon" data-documento-id="{{ documento.becario.id }}"
+                            data-tipo-documento="Boleta" data-accion="Aceptar" onclick="openModal(this)">
+                            <i class="fa fa-check-circle fa-lg"></i>
+                        </button>
+                        <button class="icon-btn reject-icon" data-documento-id="{{ documento.becario.id }}"
+                            data-tipo-documento="Boleta" data-accion="Rechazar" onclick="openModal(this)">
+                            <i class="fa fa-times-circle fa-lg"></i>
+                        </button>
+                        {% endif %}
+                    </div>
+                    {% else %}
+                    <span class="text-muted">No disponible</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal para Confirmación de Documentos -->
+<div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="modalConfirmacionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalConfirmacionLabel">Confirmar Acción</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="mensajeConfirmacion"></p>
+                <form id="formActualizarEstatus" method="post" action="{% url 'actualizar_estatus_documento' %}">
+                    {% csrf_token %}
+                    <input type="hidden" id="documento_id" name="documento_id">
+                    <input type="hidden" id="tipo_documento" name="tipo_documento">
+                    <input type="hidden" id="accion" name="accion">
+                    <label for="comentarios">Comentarios:</label>
+                    <textarea name="comentarios" id="comentarios" rows="4" class="form-control" placeholder="Escriba comentarios..." required></textarea>
+                    <div class="mt-3 text-end">
+                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = new bootstrap.Modal(document.getElementById("modalConfirmacion"));
+
+        window.openModal = function(button) {
+            // Obtener atributos del botón
+            const documentoId = button.getAttribute('data-documento-id');
+            const tipoDocumento = button.getAttribute('data-tipo-documento');
+            const accion = button.getAttribute('data-accion');
+
+            // Configurar el formulario
+            document.getElementById("documento_id").value = documentoId;
+            document.getElementById("tipo_documento").value = tipoDocumento;
+            document.getElementById("accion").value = accion;
+
+            // Cambiar el mensaje del modal
+            const accionTexto = accion === "Aceptar" ? "aprobar" : "rechazar";
+            const mensaje = `¿Estás seguro de ${accionTexto} el documento <strong>${tipoDocumento}</strong>? Deja un comentario para explicar tu decisión.`;
+            document.getElementById("mensajeConfirmacion").innerHTML = mensaje;
+
+            // Mostrar el modal
+            modal.show();
+        };
+    });
+</script>
+
+
+{% endblock %}

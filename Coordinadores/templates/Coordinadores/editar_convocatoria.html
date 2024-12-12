@@ -1,0 +1,53 @@
+{% extends 'Coordinadores/base.html' %}
+
+{% block title %}Editar Convocatoria{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Editar Convocatoria: {{ convocatoria.nombre }}</h1>
+    <form method="POST" action="" enctype="multipart/form-data"> <!-- Se agregó enctype para permitir subir archivos -->
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" value="{{ convocatoria.nombre }}" required>
+        </div>
+        <div class="form-group">
+            <label for="comentario">Comentario:</label>
+            <textarea id="comentario" name="comentario" class="form-control" required>{{ convocatoria.comentario }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="fecha_apertura">Fecha de Apertura:</label>
+            <input type="date" id="fecha_apertura" name="fecha_apertura" class="form-control"
+                   value="{{ convocatoria.fecha_apertura|date:'Y-m-d' }}" required
+                   placeholder="{{ convocatoria.fecha_apertura|date:'d-m-Y' }}">
+        </div>
+        <div class="form-group">
+            <label for="fecha_limite_inscripcion">Fecha Límite de Inscripción:</label>
+            <input type="date" id="fecha_limite_inscripcion" name="fecha_limite_inscripcion" class="form-control"
+                   value="{{ convocatoria.fecha_limite_inscripcion|date:'Y-m-d' }}" required
+                   placeholder="{{ convocatoria.fecha_limite_inscripcion|date:'d-m-Y' }}">
+        </div>
+        <div class="form-group">
+            <label for="fecha_resultados">Fecha de Resultados:</label>
+            <input type="date" id="fecha_resultados" name="fecha_resultados" class="form-control"
+                   value="{{ convocatoria.fecha_resultados|date:'Y-m-d' }}" required
+                   placeholder="{{ convocatoria.fecha_resultados|date:'d-m-Y' }}">
+        </div>
+        
+        <div class="form-group"> <!-- Nuevo campo para la foto -->
+            <label for="foto">Foto de la Convocatoria:</label>
+            <input type="file" id="foto" name="foto" class="form-control-file">
+            {% if convocatoria.foto %}
+                <br>
+                <img src="{{ convocatoria.foto.url }}" alt="Foto actual de {{ convocatoria.nombre }}" class="img-thumbnail" style="max-width: 200px;">
+            {% endif %}
+        </div>  
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        <a href="{% url 'lista_convocatorias' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+{% endblock %}

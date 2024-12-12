@@ -1,0 +1,112 @@
+{% extends 'Administradores/base.html' %}  <!-- Extiende tu archivo base -->
+
+{% block title %}Administrar Convocatorias{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <!-- Título principal -->
+    <div class="d-flex justify-content-between align-items-center mb-4b row justify-content-center">
+        <h1 class="text-primary text-center">Administrar Convocatorias</h1><br>
+    </div>
+
+
+
+    <!-- Sección para mostrar las convocatorias existentes -->
+    <section id="manage-convocatorias" class="mt-5">
+        <h2 class="h4 text-secondary mb-3 text-center">Convocatorias Existentes</h2>
+        <table class="table table-hover table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Comentario</th>
+                    <th>Fecha Apertura</th>
+                    <th>Fecha Límite</th>
+                    <th>Fecha Resultados</th>
+                    <th>Días restantes</th>
+                    <th>Foto</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for convocatoria in convocatorias %}
+                <tr>
+                    <td>{{ convocatoria.nombre }}</td>
+                    <td>{{ convocatoria.comentario }}</td>
+                    <td>{{ convocatoria.fecha_apertura }}</td>
+                    <td>{{ convocatoria.fecha_limite_inscripcion }}</td>
+                    <td>{{ convocatoria.fecha_resultados }}</td>
+                    <td>{{ convocatoria.dias_restantes }} Días</td>
+                    <td>
+                        {% if convocatoria.foto %}
+                        <img src="{{ convocatoria.foto.url }}" alt="Foto de {{ convocatoria.nombre }}" class="img-thumbnail" style="max-width: 100px;">
+                        {% else %}
+                        No disponible
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'editar_convocatoria' convocatoria.id %}" class="btn btn-warning btn-sm">Editar</a>
+                        <form method="POST" action="{% url 'borrar_convocatoria' convocatoria.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta convocatoria?');">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center">No hay convocatorias disponibles.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<!-- Asegúrate de que jQuery y Bootstrap JS están incluidos -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+<!-- JavaScript para validar las fechas -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const fechaApertura = document.getElementById('fecha_apertura');
+        const fechaLimiteInscripcion = document.getElementById('fecha_limite_inscripcion');
+        const fechaResultados = document.getElementById('fecha_resultados');
+
+        // Configurar el valor mínimo de todas las fechas como hoy
+        const today = new Date().toISOString().split('T')[0];
+        fechaApertura.setAttribute('min', today);
+        fechaLimiteInscripcion.setAttribute('min', today);
+        fechaResultados.setAttribute('min', today);
+
+        form.addEventListener('submit', function(event) {
+            const apertura = new Date(fechaApertura.value);
+            const limite = new Date(fechaLimiteInscripcion.value);
+            const resultados = new Date(fechaResultados.value);
+            const now = new Date(today);
+
+            // Validar que ninguna fecha sea menor que hoy
+            if (apertura < now || limite < now || resultados < now) {
+                alert('Ninguna de las fechas puede ser menor que el día de hoy.');
+                event.preventDefault();
+                return;
+            }
+
+            // Validar que Fecha Límite de Inscripción no sea menor que Fecha de Apertura
+            if (limite < apertura) {
+                alert('La Fecha Límite de Inscripción no puede ser menor que la Fecha de Apertura.');
+                event.preventDefault();
+                return;
+            }
+
+            // Validar que Fecha de Resultados no sea menor que Fecha Límite de Inscripción
+            if (resultados < limite) {
+                alert('La Fecha de Resultados no puede ser menor que la Fecha Límite de Inscripción.');
+                event.preventDefault();
+                return;
+            }
+        });
+    });
+</script>
+
+{% endblock %}

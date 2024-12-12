@@ -1,0 +1,24 @@
+{% extends 'Coordinadores/base.html' %}
+
+{% block title %} Editar Coordinador {% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Editar Coordinador: {{ coordinador.usuario.nombre }}</h2>
+    
+    <form method="POST" class="form-horizontal">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="usuario" class="form-label">Usuario</label>
+            {{ form.usuario|as_widget:class="form-control" }}
+        </div>
+        <div class="mb-3">
+            <label for="departamento" class="form-label">Departamento</label>
+            {{ form.departamento|as_widget:class="form-control" }}
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <a href="{% url 'lista_becarios' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

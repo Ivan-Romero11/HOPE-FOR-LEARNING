@@ -1,0 +1,117 @@
+{% extends 'Coordinadores/base.html' %}
+
+{% block title %} Becarios Existentes {% endblock %}
+
+{% block content %}
+<ul class="box-info">
+    <li>
+        <i class='bx bxs-calendar-check'></i>
+        <span class="text">
+            <h3>{{ total_becarios_seleccionados }}</h3>
+            <p>Nuevas solicitudes</p>
+        </span>
+    </li>
+    <li>
+        <i class='bx bxs-group'></i>
+        <span class="text">
+            <h3>{{ total_becarios_aceptados }}</h3>
+            <p>Becarios</p>
+        </span>
+    </li>
+    <li>
+        <i class='bx bxs-dollar-circle'></i>
+        <span class="text">
+            <h3>${{ total_donaciones }}</h3>
+            <p>Total de Donaciones</p>
+        </span>
+    </li>
+</ul>
+
+<!-- Contenedor principal -->
+<div class="row mt-4">
+    <!-- Gráfica de Becarios (tipo área más grande) -->
+    <div class="col-md-6">
+        <h2 class="mb-4 text-center">BECARIOS EXISTENTES</h2>
+        <canvas id="becariosChart"></canvas>
+    </div>
+
+    <!-- Gráfica de Becarios (más a la derecha) -->
+    <div class="col-md-6">
+        <h2 class="mb-4 text-center">ESTADO DE BECARIOS</h2>
+        <canvas id="estadoBecariosChart"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Gráfica de Becarios (tipo barra para el estado de los becarios)
+    const estadoBecariosData = {
+        labels: ['Seleccionados', 'Aceptados', 'Rechazados'],
+        datasets: [{
+            label: 'Total de Becarios',
+            data: [{{ total_becarios_seleccionados }}, {{ total_becarios_aceptados }}, {{ total_becarios_rechazados }}],
+            backgroundColor: [
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)', 
+                'rgba(255, 99, 132, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 99, 132, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+    
+    const estadoBecariosConfig = {
+        type: 'bar', // Tipo de gráfica de barra
+        data: estadoBecariosData,
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
+
+    // Gráfica de Becarios (tipo línea para el registro de becarios)
+    const becariosData = {
+        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'], // Cambia según los meses o datos relevantes
+        datasets: [{
+            label: 'Becarios por Mes',
+            data: [5, 8, 7, 6, 9], // Cambia a valores dinámicos si tienes datos reales
+            borderColor: 'rgba(54, 162, 235, 1)', // Color de la línea
+            backgroundColor: 'rgba(54, 162, 235, 0.2)', // Color de fondo
+            fill: true, // Rellenar debajo de la línea (gráfico de área)
+            tension: 0.4 // Suavizar la línea
+        }]
+    };
+    
+    const becariosConfig = {
+        type: 'line', // Cambiar a gráfica de tipo línea (área)
+        data: becariosData,
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
+
+    // Renderizar las gráficas
+    const estadoBecariosChart = new Chart(
+        document.getElementById('estadoBecariosChart'),
+        estadoBecariosConfig
+    );
+
+    const becariosChart = new Chart(
+        document.getElementById('becariosChart'),
+        becariosConfig
+    );
+</script>
+{% endblock %}

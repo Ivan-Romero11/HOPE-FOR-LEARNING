@@ -1,0 +1,117 @@
+{% extends 'Administradores/base.html' %}
+
+{% block title %} Administradores Existentes {% endblock %}
+
+{% block content %}
+<ul class="box-info">
+    <li>
+        <i class='bx bxs-calendar-check'></i>
+        <span class="text">
+            <h3>{{ total_becarios_seleccionados }}</h3>
+            <p>Nuevas solicitudes</p>
+        </span>
+    </li>
+    <li>
+        <i class='bx bxs-group'></i>
+        <span class="text">
+            <h3>{{ total_becarios_aceptados }}</h3>
+            <p>Becarios</p>
+        </span>
+    </li>
+    <li>
+        <i class='bx bxs-dollar-circle'></i>
+        <span class="text">
+            <h3>${{ total_donaciones }}</h3>
+            <p>Total de Donaciones</p>
+        </span>
+    </li>
+</ul>
+
+<!-- Contenedor principal -->
+<div class="row mt-4">
+    <!-- Tabla para mostrar administradores con estilo de Bootstrap -->
+    <div class="col-md-5">
+        <h2 class="mb-4">Administradores Activos</h2>
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Departamento</th>
+                    <th>Fecha de Registro</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for administrador in administradores %}
+                <tr>
+                    <td>{{ administrador.usuario.nombre }}</td>
+                    <td>{{ administrador.departamento }}</td>
+                    <td>{{ administrador.usuario.fecha_registro|date:"d/m/Y" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="text-center">No hay administradores disponibles.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Gráfica de becarios -->
+    <div class="col-md-6 offset-md-1">
+        <h2 class="mb-4 text-center">BECARIOS</h2>
+        <canvas id="becariosChart"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Datos para la gráfica
+    const data = {
+        labels: ['Seleccionados', 'Aceptados', 'Rechazados'],
+        datasets: [{
+            label: 'Total de Becarios',
+            data: [{{ total_becarios_seleccionados }}, {{ total_becarios_aceptados }}, {{ total_becarios_rechazados }}],
+            backgroundColor: [
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 99, 132, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 99, 132, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    // Configuración de la gráfica
+    const config = {
+        type: 'bar',  // Cambia a 'pie', 'line', etc., si prefieres otros tipos de gráfica
+        data: data,
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            animations: {
+                tension: {
+                    duration: 1000,
+                    easing: 'easeInBounce',
+                    from: 1,
+                    to: 0,
+                    loop: true
+                }
+            }
+        }
+    };
+
+    // Crear y renderizar la gráfica
+    const becariosChart = new Chart(
+        document.getElementById('becariosChart'),
+        config
+    );
+</script>
+{% endblock %}

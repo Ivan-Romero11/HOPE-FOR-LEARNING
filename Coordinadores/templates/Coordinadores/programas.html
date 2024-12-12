@@ -1,0 +1,156 @@
+{% extends 'Coordinadores/base.html' %}
+
+{% block title %}Validar Programas{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Título centrado -->
+    <div class="text-center mb-4">
+        <h1 class="title-text">Validar Programas de Voluntarios</h1>
+    </div>
+
+    <!-- Tabla vibrante -->
+    <section id="validar-programas" class="mb-5">
+        <h2 class="h4 text-center mb-4" style="color: #007bff; font-family: Arial, sans-serif;">Programas Pendientes</h2>
+        <div class="table-responsive">
+            <table class="table table-hover table-striped" style="border-radius: 12px; overflow: hidden;">
+                <thead style="background: linear-gradient(90deg, #007bff, #0056b3); color: #ffffff;">
+                    <tr style="font-family: Arial, sans-serif; font-size: 1rem;">
+                        <th>Voluntario</th>
+                        <th>Nombre del Programa</th>
+                        <th>Descripción</th>
+                        <th>Fecha de Inicio</th>
+                        <th>Fecha de Fin</th>
+                        <th>Estatus</th>
+                        <th>Becarios Inscritos</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody style="background-color: #f9f9f9; color: #333333;">
+                    {% for programa in programas %}
+                    <tr>
+                        <td>{{ programa.voluntario.usuario.nombre }}</td>
+                        <td>{{ programa.nombre_programa }}</td>
+                        <td>{{ programa.descripcion }}</td>
+                        <td>{{ programa.fecha_inicio }}</td>
+                        <td>{{ programa.fecha_fin }}</td>
+                        <td>
+                            {% if programa.estatus == 'pendiente' %}
+                            <span class="badge badge-pendiente">Pendiente</span>
+                            {% elif programa.estatus == 'aprobado' %}
+                            <span class="badge badge-aprobado">Aprobado</span>
+                            {% else %}
+                            <span class="badge badge-rechazado">Rechazado</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-center font-weight-bold">{{ programa.becarios_inscritos }}</td>
+                        <td class="text-center">
+                            <!-- Íconos para acciones -->
+                            <a href="#" class="icon-btn mx-2 text-success" data-bs-toggle="modal" 
+                               data-bs-target="#modalAccion" data-programa-id="{{ programa.id }}" 
+                               data-accion="aprobar">
+                                <i class="fa fa-check-circle fa-lg"></i>
+                            </a>
+                            <a href="#" class="icon-btn mx-2 text-danger" data-bs-toggle="modal" 
+                               data-bs-target="#modalAccion" data-programa-id="{{ programa.id }}" 
+                               data-accion="rechazar">
+                                <i class="fa fa-times-circle fa-lg"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center text-muted">No hay programas pendientes.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+<!-- Modal para acciones (aprobar o rechazar) -->
+<div class="modal fade" id="modalAccion" tabindex="-1" aria-labelledby="modalAccionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" id="modalAccionHeader">
+                <h5 class="modal-title" id="modalAccionLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalAccionBody">
+                <!-- Contenido dinámico según la acción -->
+            </div>
+            <div class="modal-footer">
+                <form id="formAccion" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" id="programaId" name="programa_id">
+                    <input type="hidden" id="accionTipo" name="accion_tipo">
+                    <button type="submit" class="btn btn-primary" id="btnConfirmarAccion">Confirmar</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('modalAccion');
+        modal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const programaId = button.getAttribute('data-programa-id');
+            const accion = button.getAttribute('data-accion');
+
+            // Asignar valores dinámicos al modal
+            const modalHeader = modal.querySelector('#modalAccionHeader');
+            const modalLabel = modal.querySelector('#modalAccionLabel');
+            const modalBody = modal.querySelector('#modalAccionBody');
+            const form = modal.querySelector('#formAccion');
+
+            if (accion === 'aprobar') {
+                modalHeader.classList.add('bg-success', 'text-white');
+                modalLabel.textContent = 'Aprobar Programa';
+                modalBody.innerHTML = `
+                    <p class="text-center">¿Estás seguro de que deseas aprobar este programa?</p>
+                `;
+                form.action = "";  // Define la acción del formulario aquí si es necesario
+                document.getElementById('accionTipo').value = 'aprobar';
+            } else if (accion === 'rechazar') {
+                modalHeader.classList.add('bg-danger', 'text-white');
+                modalLabel.textContent = 'Rechazar Programa';
+                modalBody.innerHTML = `
+                    <p class="text-center">Por favor, indica el motivo del rechazo:</p>
+                    <textarea class="form-control" name="motivo" rows="3" placeholder="Motivo" required></textarea>
+                `;
+                form.action = "";  // Define la acción del formulario aquí si es necesario
+                document.getElementById('accionTipo').value = 'rechazar';
+            }
+
+            document.getElementById('programaId').value = programaId;
+        });
+
+        modal.addEventListener('hidden.bs.modal', function () {
+            const modalHeader = modal.querySelector('#modalAccionHeader');
+            modalHeader.classList.remove('bg-success', 'bg-danger', 'text-white');
+        });
+    });
+</script>
+
+<style>
+/* Diseño del modal */
+.modal-header.bg-success {
+    background-color: #28a745 !important;
+}
+.modal-header.bg-danger {
+    background-color: #dc3545 !important;
+}
+.icon-btn {
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+.icon-btn:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s;
+}
+</style>
+{% endblock %}

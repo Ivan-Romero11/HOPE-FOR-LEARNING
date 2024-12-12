@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js" crossorigin="anonymous"></script>
+
+    <!-- My CSS -->
+    {% load static %}
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <title>{% block title %} Becarios Seleccionados {% endblock %}</title>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a href="#" class="brand">
+            <i class='bx bxs-smile'></i>
+            <span class="text">HOPE FOR LEARNING</span>
+        </a>
+        <ul class="side-menu top">
+            <li class="{% if request.path == '/Administradores/Dashboard/' %}active{% endif %}">
+                <a href="{% url 'dashboard_admi' %}">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li><br>
+            <li class="{% if 'ver_convocatorias' in request.resolver_match.url_name %}active{% endif %}">
+                <a href="{% url 'ver_convocatorias' %}">
+                    <i class='bx bxs-megaphone'></i>
+                    <span class="text">Convocatorias</span>
+                </a>
+            </li><br>
+            <li class="{% if request.path == '/Administradores/Finanzas/' %}active{% endif %}">
+                <a href="{% url 'finanzas' %}">
+                    <i class='bx bxs-wallet' ></i>
+                    <span class="text">Finanzas</span>
+                </a>
+            </li><br>
+            <li class="nav-item dropdown {% if 'Administradores/Coordinadores' in request.path %}active{% endif %}">
+                <a class="nav-link dropdown-toggle" href="{% url 'lista_coordinadores' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class='bx bxs-user-rectangle'></i>
+                    <span class="text">Coordinadores</span>
+                </a>
+                <ul class="dropdown-menu submenu">
+                    <li><a class="dropdown-item" href="{% url 'lista_coordinadores' %}">Activos</a></li>
+                    <li><a class="dropdown-item" href="{% url 'lista_coordinadores_inactivos' %}">Inactivos</a></li>
+                </ul>
+            </li>
+
+            <li class="side-menu">
+                <a href="{% url 'cerrar_sesion' %}" class="logout2">
+                    <i class='bx bxs-log-out-circle'></i>
+                    <span class="text">Cerrar Sesión</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <a href="#" class="nav-link">Administradores</a>
+
+            <!-- Contenedor del perfil del administrador activo -->
+            <div class="user-profile">
+                <img src="{{ administrador.usuario.foto.url }}" 
+                     alt="Foto de {{ administrador.usuario.nombre }}" 
+                     class="profile-picture">
+                <span class="user-name">{{ administrador.usuario.nombre }} {{ administrador.usuario.apellido_paterno }}</span>
+            </div>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+        <main>
+            {% block content %}
+            <!-- El contenido de las demás páginas irá aquí -->
+            {% endblock %}
+        </main>
+        <!-- MAIN -->
+    </section>
+    <!-- CONTENT -->
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

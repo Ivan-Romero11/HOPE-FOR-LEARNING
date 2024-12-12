@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rechazo de Beca - Hope for Learning</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #d9534f; /* Color del encabezado de rechazo */
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .content {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .content p {
+            line-height: 1.6;
+        }
+        .content .highlight {
+            font-weight: bold;
+            color: #d9534f; /* Color del texto destacado de rechazo */
+        }
+        .motivo {
+            background-color: #f8d7da; /* Color de fondo para el motivo */
+            border-left: 5px solid #d9534f; /* Color del borde para el motivo */
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .convocatoria {
+            background-color: #f8d7da; /* Color de fondo de la convocatoria */
+            border-left: 5px solid #d9534f; /* Color del borde de la convocatoria */
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+            margin-top: 30px;
+        }
+        .footer a {
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Estimado/a {{ becario.usuario.nombre }}</h1>
+        </div>
+        <div class="content">
+            <p>Lamentablemente, no has sido aceptado en el programa de becas de Hope for Learning en esta ocasión.</p>
+
+            <!-- Mostrar el motivo si existe -->
+            {% if motivo %}
+                <div class="motivo">
+                    <p><strong>Motivo de tu rechazo:</strong> {{ motivo }}</p>
+                </div>
+            {% endif %}
+
+            <div class="convocatoria">
+                <p><strong>Convocatoria:</strong> {{ convocatoria.nombre }}</p>
+                <p><strong>Descripción:</strong> {{ convocatoria.comentario }}</p>
+            </div>
+            <p class="highlight">Te agradecemos sinceramente por tu interés y el esfuerzo demostrado. Aunque no seas parte de esta convocatoria, te animamos a seguir aplicando en futuras oportunidades.</p>
+            <p>Recuerda que cada proceso de selección es altamente competitivo, y el hecho de que hayas llegado hasta aquí demuestra tu dedicación y compromiso con tus estudios. No dudes en ponerte en contacto con nosotros si tienes alguna pregunta o necesitas orientación.</p>
+        </div>
+        <div class="footer">
+            <p>Este es un mensaje automático, por favor no respondas a este correo.</p>
+        </div>
+    </div>
+</body>
+</html>

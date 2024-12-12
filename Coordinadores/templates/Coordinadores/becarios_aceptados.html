@@ -1,0 +1,304 @@
+{% extends 'Coordinadores/base.html' %}
+
+{% block title %} Lista de Becarios {% endblock %}
+
+{% block content %}
+{% load static %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<div class="container mt-4">
+    <div class="row mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="text-primary">Becarios Aceptados</h1>
+            <div class="col-md-4 ms-auto">
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" id="searchInput" class="form-control" placeholder="Buscar becarios..." onkeyup="filtrarBecarios()">
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtros de búsqueda -->
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <select id="filtroGrado" class="form-select" onchange="filtrarBecarios()">
+                    <option value="">Todos los grados académico</option>
+                    <option value="Licenciatura">Licenciatura</option>
+                    <option value="Maestría">Maestría</option>
+                    <option value="Doctorado">Doctorado</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select id="filtroInstitucion" class="form-select" onchange="filtrarBecarios()">
+                    <option value="">Todas las instituciones</option>
+                    {% for becario in becarios %}
+                        <option value="{{ becario.informacionacademica.institucion_educativa }}">{{ becario.informacionacademica.institucion_educativa }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    
+    </div>
+        
+    <div class="row justify-content-center" id="becariosList">
+        {% for becario in becarios %}
+        <div class="col-md-4 mb-4 becario-card" data-nombre="{{ becario.usuario.nombre }}" 
+            data-grado="{{ becario.informacionacademica.nivel_academico }}" 
+            data-institucion="{{ becario.informacionacademica.institucion_educativa }}"> 
+            <div class="card custom-card shadow-sm text-center" style="width: 100%; max-width: 310px;">
+                <div class="custom-card-header">
+                    {% if becario.usuario.foto %}
+                        <img src="{{ becario.usuario.foto.url }}" alt="Foto de {{ becario.usuario.nombre }}" class="img-fluid rounded-circle">
+                    {% else %}
+                        <img src="{% static 'default_profile_image.png' %}" alt="Foto de {{ becario.usuario.nombre }}" class="img-fluid rounded-circle">
+                    {% endif %}
+                </div>
+
+                <div class="card-body custom-card-body">
+                    <h5 class="card-title">{{ becario.usuario.nombre }}</h5>
+                    <p class="estatus" style="color: #33da00; background-color: rgba(43, 255, 0, 0.1); padding: 10px; border-radius: 5px;">
+                        <i class="fas fa-circle" style="color: #49eb17;"></i> Estatus: Aceptado {{ becario.estadosbeca.estado }}
+                    </p>
+                    <p class="card-text" style="margin-bottom: 10px;">
+                        <i class="fas fa-user-graduate" style="color: #007bff;"></i> <strong>Grado académico:</strong> {{ becario.informacionacademica.nivel_academico }}
+                    </p>
+                    <p class="card-text" style="margin-bottom: 10px;">
+                        <i class="fas fa-university" style="color: #007bff;"></i> <strong>Institución:</strong> {{ becario.informacionacademica.institucion_educativa }}
+                    </p>
+                    <p class="card-text" style="margin-bottom: 10px;">
+                        <i class="fas fa-calendar-alt" style="color: #007bff;"></i> <strong>Fecha de ingreso:</strong> {{ becario.informacionacademica.fecha_ingreso }}
+                    </p>
+                    <p class="card-text" style="margin-bottom: 10px;">
+                        <i class="fas fa-calendar-alt" style="color: #007bff;"></i> <strong>Fecha de egreso:</strong> {{ becario.informacionacademica.fecha_egreso }}
+                    </p>
+                    <p class="card-text" style="margin-bottom: 10px;">
+                        <i class="fas fa-award" style="color: #007bff;"></i> <strong>Promedio:</strong> {{ becario.informacionacademica.promedio }}
+                    </p>
+                    <div class="mt-3">
+                        <i class="fas fa-graduation-cap" style="font-size: 24px; color: #000a5fa9;"></i>
+                    </div>
+                    <div class="button-group mt-3">
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal{{ becario.id }}">
+                            Ver más
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<style>
+    /* Aseguramos uniformidad en las tarjetas */
+    .becario-card {
+        display: flex;
+        justify-content: center;
+    }
+
+    .custom-card {
+        height: 100%; /* Asegura que todas las tarjetas sean del mismo tamaño */
+        display: flex;
+        flex-direction: column; /* Contenido en columnas */
+        justify-content: space-between; /* Espacio uniforme entre encabezado, cuerpo y botones */
+        min-height: 450px; /* Altura mínima */
+        max-width: 310px; /* Limita el ancho máximo */
+        margin: auto; /* Centra la tarjeta */
+    }
+
+
+    .custom-card-body {
+        flex: 1; /* Rellena el espacio disponible */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+
+</style>
+
+<!-- Modal con acordeones desplegables -->
+{% for becario in becarios %}
+<div class="modal fade" id="modal{{ becario.id }}" tabindex="-1" aria-labelledby="modalLabel{{ becario.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel{{ becario.id }}">{{ becario.usuario.nombre }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="accordion" id="accordion{{ becario.id }}">
+                    <!-- Sección de Datos personales -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingNombre{{ becario.id }}">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNombre{{ becario.id }}" aria-expanded="true" aria-controls="collapseNombre{{ becario.id }}">
+                                Datos personales
+                            </button>
+                        </h2>
+                        <div id="collapseNombre{{ becario.id }}" class="accordion-collapse collapse show" aria-labelledby="headingNombre{{ becario.id }}" data-bs-parent="#accordion{{ becario.id }}">
+                            <div class="accordion-body">
+                                <p class="em-2"></p><i class="fas fa-user"></i> <strong>Nombre:</strong> {{ becario.usuario.nombre }}<br>
+                                <p class="em-2"></p><i class="fas fa-user-circle"></i> <strong>Apellido paterno:</strong> {{ becario.usuario.apellido_paterno }}<br>
+                                <p class="em-2"></p><i class="fas fa-user-circle"></i> <strong>Apellido materno:</strong> {{ becario.usuario.apellido_materno }}<br>
+                                <p class="em-2"></p><i class="fas fa-id-card text-dark"></i> <strong>CURP:</strong> {{ becario.usuario.curp }}<br>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección de Datos de contacto -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingContacto{{ becario.id }}">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseContacto{{ becario.id }}" aria-expanded="false" aria-controls="collapseContacto{{ becario.id }}">
+                                Datos de contacto
+                            </button>
+                        </h2>
+                        <div id="collapseContacto{{ becario.id }}" class="accordion-collapse collapse" aria-labelledby="headingContacto{{ becario.id }}" data-bs-parent="#accordion{{ becario.id }}">
+                            <div class="accordion-body">
+                                <p class="card-text"><i class="fas fa-phone text-dark"></i> <strong>Teléfono:</strong> {{ becario.usuario.telefono }}</p>
+                                <p class="card-text"><i class="fas fa-envelope text-dark"></i> <strong>Email:</strong> {{ becario.usuario.email }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección de Domicilio -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingDomicilio{{ becario.id }}">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDomicilio{{ becario.id }}" aria-expanded="false" aria-controls="collapseDomicilio{{ becario.id }}">
+                                Domicilio
+                            </button>
+                        </h2>
+                        <div id="collapseDomicilio{{ becario.id }}" class="accordion-collapse collapse" aria-labelledby="headingDomicilio{{ becario.id }}" data-bs-parent="#accordion{{ becario.id }}">
+                            <div class="accordion-body">
+                                {% if becario.domicilio %}
+                                    <p class="card-text"><i class="fas fa-globe text-dark"></i> <strong>País:</strong> {{ becario.domicilio.pais }}</p>
+                                    <p class="card-text"><i class="fas fa-map text-dark"></i> <strong>Estado:</strong> {{ becario.domicilio.estado }}</p>
+                                    <p class="card-text"><i class="fas fa-city text-dark"></i> <strong>Ciudad:</strong> {{ becario.domicilio.ciudad }}</p>
+                                    <p class="card-text"><i class="fas fa-home text-dark"></i> <strong>Dirección:</strong> {{ becario.domicilio.direccion }}</p>
+                                    <p class="card-text"><i class="fas fa-mail-bulk text-dark"></i> <strong>Código Postal:</strong> {{ becario.domicilio.codigo_postal }}</p>
+                                {% else %}
+                                    <p>No disponible</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección de Datos Escolares -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingEscolar{{ becario.id }}">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEscolar{{ becario.id }}" aria-expanded="false" aria-controls="collapseEscolar{{ becario.id }}">
+                                Datos escolares
+                            </button>
+                        </h2>
+                        <div id="collapseEscolar{{ becario.id }}" class="accordion-collapse collapse" aria-labelledby="headingEscolar{{ becario.id }}" data-bs-parent="#accordion{{ becario.id }}">
+                            <div class="accordion-body">
+                                {% if becario.informacionacademica %}
+                                    <p class="em-2"><i class="fas fa-user-graduate"></i> <strong>Carrera:</strong> {{ becario.informacionacademica.carrera }}</p>
+                                    <p class="em-2"><i class="fas fa-star"></i> <strong>Promedio académico:</strong> {{ becario.informacionacademica.promedio }}</p>
+                                    <p class="em-2"><i class="fas fa-school"></i> <strong>Universidad:</strong> {{ becario.informacionacademica.institucion_educativa }}</p>
+                                    <p class="card-text mb-2"><i class="fas fa-calendar-alt"></i> <strong>Fecha de ingreso:</strong> {{ becario.informacionacademica.fecha_ingreso|date:"j F Y" }}</p>
+                                    <p class="card-text mb-2"><i class="fas fa-calendar-check"></i> <strong>Fecha de egreso:</strong> {% if becario.informacionacademica.fecha_egreso %}{{ becario.informacionacademica.fecha_egreso|date:"j F Y" }}{% else %}No aplica{% endif %}</p>
+                                {% else %}
+                                    <p>No hay información académica disponible.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección de Documentos -->
+<div class="accordion-item">
+    <h2 class="accordion-header" id="headingDocumentos{{ becario.id }}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDocumentos{{ becario.id }}" aria-expanded="false" aria-controls="collapseDocumentos{{ becario.id }}">
+            Documentos
+        </button>
+    </h2>
+    <div id="collapseDocumentos{{ becario.id }}" class="accordion-collapse collapse" aria-labelledby="headingDocumentos{{ becario.id }}" data-bs-parent="#accordion{{ becario.id }}">
+        <div class="accordion-body">
+            <embed src="{% static 'documentos/Autoevaluacion.pdf' %}" type="application/pdf" width="100%" height="500px">
+        </div>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+    <!-- Bootstrap JS -->
+    <!-- <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script> -->
+    <script>
+        function filtrarBecarios() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const cards = document.querySelectorAll('.becario-card');
+        
+            cards.forEach(card => {
+                // Obtén el texto de todas las partes de la tarjeta
+                const cardContent = card.textContent.toLowerCase();
+                // Verifica si el filtro está incluido en el contenido de la tarjeta
+                if (cardContent.includes(filter)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        </script>
+    
+    <script>
+        function filtrarBecarios() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const cards = document.querySelectorAll('.becario-card');
+        
+            cards.forEach(card => {
+                const cardContent = card.textContent.toLowerCase();
+                card.style.display = cardContent.includes(filter) ? '' : 'none';
+            });
+        }
+    
+        function mostrarConfirmacion(estado, nombreBecario, becarioId) {
+            const mensaje = `¿Estás seguro de que deseas marcar a ${nombreBecario} como ${estado}?`;
+            document.getElementById('mensajeConfirmacion').textContent = mensaje;
+            document.getElementById('estado').value = estado;
+            document.getElementById('becario_id').value = becarioId;
+    
+            const modal = new bootstrap.Modal(document.getElementById('modalConfirmacion'));
+            modal.show();
+        }
+
+
+        function filtrarBecarios() {
+        const searchInput = document.getElementById("searchInput").value.toLowerCase();
+        const filtroGrado = document.getElementById("filtroGrado").value.toLowerCase();
+        const filtroInstitucion = document.getElementById("filtroInstitucion").value.toLowerCase();
+        const cards = document.querySelectorAll('.becario-card');
+    
+        cards.forEach(card => {
+            
+            const cardContent = card.textContent.toLowerCase();
+            
+            const grado = card.getAttribute("data-grado").toLowerCase();
+            const institucion = card.getAttribute("data-institucion").toLowerCase();
+
+            
+            if (
+                (cardContent.includes(searchInput)) &&
+                (filtroGrado === "" || grado.includes(filtroGrado)) &&
+                (filtroInstitucion === "" || institucion.includes(filtroInstitucion))
+            ) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+
+    </script>
+    {% endblock %}
